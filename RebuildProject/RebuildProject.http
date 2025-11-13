@@ -1,0 +1,6 @@
+@RebuildProject_HostAddress = http://localhost:5096
+
+GET {{RebuildProject_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
