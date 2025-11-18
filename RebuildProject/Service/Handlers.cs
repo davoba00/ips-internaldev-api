@@ -361,7 +361,6 @@ namespace RebuildProject.Service
     }
     #endregion
 
-
     #region GetApiLogQuery
 
     public partial class GetApiLogQuery : IRequest<GetApiLogResult> { }
@@ -391,4 +390,39 @@ namespace RebuildProject.Service
     }
     #endregion
 
+    #region AddResourceCommand
+
+    public partial class AddApiLogCommand : IRequest<AddApiLogResult>
+    {
+    }
+
+    public partial class AddApiLogResult : Result
+    {
+        public bool IsValid { get; set; }
+    }
+    public interface IAddApiLogService
+    {
+        Task<AddApiLogResult> AddApiLog(AddApiLogCommand query);
+    }
+
+
+    public class AddApiLogHandler : IRequestHandler<AddApiLogCommand, AddApiLogResult>
+    {
+
+        private readonly IAddApiLogService service;
+
+        public AddApiLogHandler(IAddApiLogService service)
+        {
+            this.service = service;
+        }
+
+
+        public async Task<AddApiLogResult> Handle(AddApiLogCommand request, CancellationToken cancellationToken)
+        {
+            var resource = await service.AddApiLog(request);
+            return resource;
+        }
+    }
+
+    #endregion
 }

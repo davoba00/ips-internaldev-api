@@ -26,6 +26,7 @@ namespace RebuildProject.Service
         public async Task<GetResourcesResult> GetResources(GetResourcesQuery query)
         {
             var list = db.Resources.AsQueryable();
+
             return await Task.FromResult(new GetResourcesResult
             {
                 Resources = list

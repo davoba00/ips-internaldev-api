@@ -43,5 +43,24 @@ namespace RebuildProject.Controllers
         }
 
 
+        [EnableQuery]
+        [HttpPost("apilog")]
+        public async Task<IActionResult> Post([FromBody] ApiLog apilog)
+        {
+            var result = await mediator.Send(new AddApiLogCommand
+            {
+                ApiLog = apilog
+            });
+
+            if (result.IsFailed)
+            {
+                return this.StatusCode(result);
+            }
+
+            return Ok(result.ApiLog);
+        }
+
+
+
     }
 }

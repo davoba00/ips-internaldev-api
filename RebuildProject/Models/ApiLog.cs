@@ -9,7 +9,7 @@ public partial class ApiLog
 
     public Guid RequestId { get; set; }
 
-    public string? RequestUrl { get; set; }
+    public string?  RequestUrl { get; set; }
 
     public string? RequestMethod { get; set; }
 

@@ -1,4 +1,5 @@
 ﻿using FluentResults;
+using System.IO;
 using System.Net;
 using System.Text;
 using static RebuildProject.Common.Enums;
@@ -78,7 +79,32 @@ namespace RebuildProject.Extensions
 
             return (int)statusCode;
         }
+
+        public static async Task<string> ReadToEndAsync(this Stream stream)
+        {
+            if (stream == null || !stream.CanRead)
+            {
+                return string.Empty;
+            }
+
+            if (stream.CanSeek)
+            {
+                stream.Seek(0, SeekOrigin.Begin);
+            }
+
+            var result = string.Empty;
+
+            using (var reader = new StreamReader(stream, Encoding.UTF8, leaveOpen: true))
+            {
+               result = await reader.ReadToEndAsync();
+            }
+
+            if (stream.CanSeek)
+            {
+                stream.Seek(0, SeekOrigin.Begin);
+            }
+
+            return result;
+        }
     }
-
-
 }

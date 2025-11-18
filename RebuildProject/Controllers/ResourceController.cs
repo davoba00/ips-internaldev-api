@@ -34,7 +34,7 @@ namespace RebuildProject.Controllers
         #region Public Methods
         [EnableQuery]
         [HttpGet("resource")]
-        public async Task<IQueryable<Resource>> Get(ODataQueryOptions<Resource> queryOptions)
+        public async Task<IActionResult> Get(ODataQueryOptions<Resource> queryOptions)
         {
             var result = await mediator.Send(new GetResourcesQuery
             {
@@ -43,10 +43,10 @@ namespace RebuildProject.Controllers
 
             if (result.IsFailed || result.Resources == null)
             {
-                return Enumerable.Empty<Resource>().AsQueryable();
+                return this.StatusCode(result);                
             }
 
-            return result.Resources;
+            return Ok(result.Resources);
         }
 
         [EnableQuery]

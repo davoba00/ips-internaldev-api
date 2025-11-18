@@ -4,8 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using NLog.Web;
 using ODataResourceApi.Services.OData;
 using RebuildProject.MediatR;
+using RebuildProject.Middleware;
 using RebuildProject.Models;
 using RebuildProject.Service;
+using RebuildProject.Service.DbLogging;
 using static RebuildProject.Common.Constants;
 
 namespace RebuildProject
@@ -32,11 +34,20 @@ namespace RebuildProject
                  .AddODataRoutes()
                  .AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
+            builder.Services.Configure<DbLoggingSettings>(
+                    builder.Configuration.GetSection("DbLogging"));
+
+
             builder.Services.Scan(scan => scan
                .FromAssemblies(AppDomain.CurrentDomain.GetAssemblies())
                 .AddClasses(classes => classes.Where(c => c.Name.EndsWith("Service")))
                 .AsSelfWithInterfaces()
                 .WithScopedLifetime());
+
+            builder.Services.AddTransient<RequestMiddleware>();
+            builder.Services.AddTransient<ApiLoggingMiddleware>();
+
+
 
             return builder;
         }
@@ -52,6 +63,8 @@ namespace RebuildProject
             }
 
             app.UseHttpsRedirection();
+            app.UseRequestMiddleware();
+            app.UseApiLogging();
             app.UseAuthorization();
 
             app.MapControllers();
