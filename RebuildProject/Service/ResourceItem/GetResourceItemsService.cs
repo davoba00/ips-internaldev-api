@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.OData.Query;
 using RebuildProject.Models;
 
+// TODO
+// - add single space between codes
 namespace RebuildProject.Service
 {
     #region Query

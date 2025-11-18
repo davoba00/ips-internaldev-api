@@ -9,6 +9,11 @@ using static RebuildProject.Common.Constants;
 
 namespace RebuildProject.Controllers
 {
+    // TODO: remove
+    // - remove mediator constructor assignment if not used
+    // - remove unused `usings`, `commented codes`
+    // - add `this.` 
+    //
     [Route(ApiRoutes.Default)]
     [ApiController]
     public class ApiLogController : BaseODataController

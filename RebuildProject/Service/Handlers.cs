@@ -2,6 +2,9 @@
 using MediatR;
 using RebuildProject.Models;
 
+// TODO:
+// - Order regions by GET, ADD, UPDATE, DELETE
+//
 namespace RebuildProject.Service
 {
 

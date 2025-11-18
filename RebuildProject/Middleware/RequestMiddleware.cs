@@ -5,6 +5,9 @@ using RebuildProject.Models;
 
 namespace RebuildProject.Middleware
 {
+    // TODO: remove
+    // - remove extra spaces, add one space between codes
+    //
     public class RequestMiddleware : IMiddleware
     {
         #region Fields
@@ -77,6 +80,8 @@ namespace RebuildProject.Middleware
                 "/%2524metadata"
             };
 
+            // TODO: Remove variable, put condition in brackes
+            //
             var isExisiting = excudedEndpoints.Any(x => request.Path.Value.Contains(x, StringComparison.InvariantCultureIgnoreCase));
 
             if (isExisiting)

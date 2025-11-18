@@ -50,6 +50,8 @@ namespace RebuildProject.Service
 
             if (resource == null)
             {
+                // TODO
+                // - add new PatchResourceResult();
                 return new PatchResourceResult
                 {
                 };

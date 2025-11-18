@@ -10,6 +10,10 @@ using System.Data.Common;
 using System.Net;
 using static RebuildProject.Common.Enums;
 
+// TODO: remove
+// - remove unused `usings`, `commented codes`, `class`
+// - add `this.` 
+//
 namespace RebuildProject.MediatR
 {
     public class GlobalRequestExceptionHandler<TRequest, TResponse, TException> : IRequestExceptionHandler<TRequest, TResponse, Exception>
@@ -85,8 +89,6 @@ namespace RebuildProject.MediatR
 
         #endregion
     }
-
-
 
     public static class SqlErrorHttpMapper
     {

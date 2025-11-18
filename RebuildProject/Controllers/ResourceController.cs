@@ -12,13 +12,18 @@ using static RebuildProject.Common.Constants;
 
 namespace RebuildProject.Controllers
 {
+    // TODO: remove
+    // - remove mediator constructor assignment if not used
+    // - remove unused `usings`, `commented codes`
+    // - add `this.` 
+    //
     [Route(ApiRoutes.Default)]
     [ApiController]
     public class ResourceController : BaseODataController
     {
         #region Private Fields
-
-        private readonly IMediator mediator;
+      
+        private readonly IMediator mediator; 
 
         #endregion
 
@@ -62,6 +67,8 @@ namespace RebuildProject.Controllers
 
             if (result.IsFailed || result.Resource == null)
             {
+                // TODO: add space between
+                //
                 var empty = Enumerable.Empty<Resource>().AsQueryable();
                 return SingleResult.Create(empty);
             }

@@ -17,9 +17,6 @@ namespace RebuildProject
 
         public static WebApplicationBuilder ConfigureServices(this WebApplicationBuilder builder)
         {
-            // TODO
-            // Add services to the container.
-
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
@@ -37,7 +34,6 @@ namespace RebuildProject
 
             builder.Services.Configure<DbLoggingSettings>(builder.Configuration.GetSection("DbLogging"));
 
-
             builder.Services.Scan(scan => scan
                .FromAssemblies(AppDomain.CurrentDomain.GetAssemblies())
                 .AddClasses(classes => classes.Where(c => c.Name.EndsWith("Service")))
@@ -46,8 +42,6 @@ namespace RebuildProject
 
             builder.Services.AddTransient<RequestMiddleware>();
             builder.Services.AddTransient<ApiLoggingMiddleware>();
-
-
 
             return builder;
         }

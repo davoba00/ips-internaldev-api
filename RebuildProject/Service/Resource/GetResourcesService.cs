@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.OData.Query;
 using Microsoft.IdentityModel.Tokens;
 using RebuildProject.Models;
 
+// TODO
+// - remove extra space
+//
 namespace RebuildProject.Service
 {
     #region Query

@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.OData.Query;
 using RebuildProject.Models;
 
+// TODO
+// - finish the implementation
 namespace RebuildProject.Service
 {
     #region Query

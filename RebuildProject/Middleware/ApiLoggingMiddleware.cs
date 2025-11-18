@@ -35,7 +35,6 @@ namespace RebuildProject.Middleware
 
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
-            //request 
             var log = context.Features.Get<ApiLog>();
 
             if (log == null)
@@ -61,8 +60,6 @@ namespace RebuildProject.Middleware
             }
 
             context.Response.Body = originalBody;
-
-            //response 
 
             var respone = context.Response;
 

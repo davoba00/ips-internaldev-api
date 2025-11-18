@@ -52,6 +52,8 @@ namespace RebuildProject.Service
 
             db.SaveChanges();
 
+            // TODO
+            // add DeleteResourceResult();
             return new DeleteResourceResult { };
         }
 
