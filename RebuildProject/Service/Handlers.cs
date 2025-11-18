@@ -32,6 +32,7 @@ namespace RebuildProject.Service
             return await service.GetResources(request);
         }
     }
+
     #endregion
 
     #region GetResourceQuery
@@ -97,6 +98,7 @@ namespace RebuildProject.Service
             return resource;
         }
     }
+
     #endregion
 
     #region AddResourceCommand

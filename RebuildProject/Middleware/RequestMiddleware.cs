@@ -21,11 +21,13 @@ namespace RebuildProject.Middleware
                 return;
             }
 
-            // Da definesem flag koji bi bio should log, da li treba da zapocem u zavisnosti od uslova, ako naletim na $metadata, should log treba da vrati false
+            var shouldLog = this.ShouldLog(context.Request);
 
-            //Ne loguj mi req za metadata, odradi
-
-
+            if (!shouldLog)
+            {
+                await next(context);
+                return;
+            }
 
             var request = context.Request;
 
@@ -44,6 +46,30 @@ namespace RebuildProject.Middleware
 
             await next(context);
 
+        }
+
+        private bool ShouldLog(HttpRequest request)
+        {
+            if (!request.Path.HasValue)
+            {
+                return false;
+            }
+
+            var excudedEndpoints = new List<string>
+            {
+                "/$metadata",
+                "/%24metadata",
+                "/%2524metadata"
+            };
+
+            var isExisiting = excudedEndpoints.Any(x => request.Path.Value.Contains(x, StringComparison.InvariantCultureIgnoreCase));
+
+            if (isExisiting)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

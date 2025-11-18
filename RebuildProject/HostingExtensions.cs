@@ -7,7 +7,6 @@ using RebuildProject.MediatR;
 using RebuildProject.Middleware;
 using RebuildProject.Models;
 using RebuildProject.Service;
-using RebuildProject.Service.DbLogging;
 using static RebuildProject.Common.Constants;
 
 namespace RebuildProject
