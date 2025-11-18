@@ -5,26 +5,40 @@ using RebuildProject.Models;
 namespace RebuildProject.Service
 {
     #region Query
+
     public partial class DeleteResourceItemCommand
     {
-        #region Fields
         public Guid Id { get; set; }
-        #endregion
     }
+
     #endregion
 
     #region Result
+
     public partial class DeleteResourceItemResult
     {
     }
+
     #endregion
+
     public class DeleteResourceItemService : IDeleteResourceItemService
     {
+        #region Fields
+
         private readonly AppDbContext db;
+
+        #endregion
+
+        #region Constructor
+
         public DeleteResourceItemService(AppDbContext db)
         {
             this.db = db;
         }
+
+        #endregion
+
+        #region Public Methods
 
         public async Task<DeleteResourceItemResult> DeleteResourceItem(DeleteResourceItemCommand query)
         {
@@ -38,6 +52,8 @@ namespace RebuildProject.Service
 
             return await Task.FromResult(new DeleteResourceItemResult { });
         }
+
+        #endregion
 
     }
 }

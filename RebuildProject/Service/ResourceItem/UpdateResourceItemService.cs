@@ -6,31 +6,43 @@ using RebuildProject.Models;
 namespace RebuildProject.Service
 {
     #region Query
+
     public partial class PatchResourceItemCommand
     {
-        #region Fields
         public Delta<ResourceItem> Delta { get; set; } = default!;
         public Guid Id { get; set; }
-        #endregion
     }
+
     #endregion
+
+    #region Result
+
     public partial class PatchResourceItemResult
     {
         public ResourceItem Resources { get; set; }
     }
+
+    #endregion
+
+
     public class UpdateResourceItemService : IUpdateResourceItemService
     {
         #region Fields
+
         private readonly AppDbContext db;
+
         #endregion
 
         #region Contructor
+
         public UpdateResourceItemService(AppDbContext db)
         {
             this.db = db;
         }
+
         #endregion
 
+        #region Public Methods
 
         public async Task<PatchResourceItemResult> PatchResourceItem(PatchResourceItemCommand query)
         {
@@ -54,5 +66,7 @@ namespace RebuildProject.Service
                 Resources = resource
             };
         }
+
+        #endregion
     }
 }

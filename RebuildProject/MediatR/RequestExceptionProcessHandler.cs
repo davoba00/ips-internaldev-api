@@ -15,7 +15,6 @@ namespace RebuildProject.MediatR
     public class GlobalRequestExceptionHandler<TRequest, TResponse, TException> : IRequestExceptionHandler<TRequest, TResponse, Exception>
         where TResponse : Result, new()
     {
-
         #region Fields
 
         private readonly Logger logger;
@@ -91,6 +90,7 @@ namespace RebuildProject.MediatR
 
     public static class SqlErrorHttpMapper
     {
+        #region Fields
         public static readonly Dictionary<int, int> Map = new()
     {
         // 🔹 User input / syntax errors → 400 Bad Request
@@ -139,9 +139,14 @@ namespace RebuildProject.MediatR
         { 0,     StatusCodes.Status500InternalServerError }
     };
 
+        #endregion
+
+        #region Public Methods
         public static int GetHttpStatus(int sqlErrorNumber)
             => Map.TryGetValue(sqlErrorNumber, out var status)
                 ? status
                 : StatusCodes.Status500InternalServerError;
+        
+        #endregion
     }
 }

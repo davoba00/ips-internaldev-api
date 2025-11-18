@@ -27,10 +27,14 @@ namespace RebuildProject.Service
             this.service = service;
         }
 
+        #region Public Methods
+
         public async Task<GetResourcesResult> Handle(GetResourcesQuery request, CancellationToken cancellationToken)
         {
             return await service.GetResources(request);
         }
+
+        #endregion
     }
 
     #endregion
@@ -56,11 +60,15 @@ namespace RebuildProject.Service
             this.service = service;
         }
 
+        #region Public Methods
+
         public async Task<GetResourceResult> Handle(GetResourceQuery request, CancellationToken cancellationToken)
         {
             var resource = await service.GetResource(request);
             return resource;
         }
+
+        #endregion
     }
 
     #endregion
@@ -91,12 +99,15 @@ namespace RebuildProject.Service
             this.service = service;
         }
 
+        #region Public Methods
 
         public async Task<DeleteResourceResult> Handle(DeleteResourceCommand request, CancellationToken cancellationToken)
         {
             var resource = await service.DeleteResource(request);
             return resource;
         }
+
+        #endregion
     }
 
     #endregion
@@ -127,12 +138,16 @@ namespace RebuildProject.Service
             this.service = service;
         }
 
+        #region Public Methods
 
         public async Task<AddResourceResult> Handle(AddResourceCommand request, CancellationToken cancellationToken)
         {
             var resource = await service.AddResource(request);
             return resource;
         }
+
+        #endregion
+
     }
     #endregion
 
@@ -162,12 +177,15 @@ namespace RebuildProject.Service
             this.service = service;
         }
 
+        #region Public Methods
 
         public async Task<PatchResourceResult> Handle(PatchResourceCommand request, CancellationToken cancellationToken)
         {
             var resource = await service.PatchResource(request);
             return resource;
         }
+
+        #endregion
     }
     #endregion
 
@@ -193,10 +211,14 @@ namespace RebuildProject.Service
             this.service = service;
         }
 
+        #region Public Methods
+
         public async Task<GetResourcesItemResult> Handle(GetResourcesItemQuery request, CancellationToken cancellationToken)
         {
             return await service.GetResources(request);
         }
+
+        #endregion
     }
     #endregion
 
@@ -222,10 +244,14 @@ namespace RebuildProject.Service
             this.service = service;
         }
 
+        #region Public Methods
+
         public async Task<GetResourceItemResult> Handle(GetResourceItemQuery request, CancellationToken cancellationToken)
         {
             return await service.GetResource(request);
         }
+
+        #endregion
     }
     #endregion
 
@@ -255,12 +281,15 @@ namespace RebuildProject.Service
             this.service = service;
         }
 
+        #region Public Methods
 
         public async Task<DeleteResourceItemResult> Handle(DeleteResourceItemCommand request, CancellationToken cancellationToken)
         {
             var resource = await service.DeleteResourceItem(request);
             return resource;
         }
+
+        #endregion
     }
     #endregion
 
@@ -290,12 +319,15 @@ namespace RebuildProject.Service
             this.service = service;
         }
 
+        #region Public Methods
 
         public async Task<PatchResourceItemResult> Handle(PatchResourceItemCommand request, CancellationToken cancellationToken)
         {
             var resource = await service.PatchResourceItem(request);
             return resource;
         }
+
+        #endregion
     }
     #endregion
 
@@ -325,12 +357,15 @@ namespace RebuildProject.Service
             this.service = service;
         }
 
+        #region Public Methods
 
         public async Task<AddResourceItemResult> Handle(AddResourceItemCommand request, CancellationToken cancellationToken)
         {
             var resource = await service.AddResourceItem(request);
             return resource;
         }
+
+        #endregion
     }
     #endregion
 
@@ -356,10 +391,14 @@ namespace RebuildProject.Service
             this.service = service;
         }
 
+        #region Public Methods
+
         public async Task<GetApiLogsResult> Handle(GetApiLogsQuery request, CancellationToken cancellationToken)
         {
             return await service.ApiLogs(request);
         }
+
+        #endregion
     }
     #endregion
 
@@ -385,10 +424,14 @@ namespace RebuildProject.Service
             this.service = service;
         }
 
+        #region Public Methods
+
         public async Task<GetApiLogResult> Handle(GetApiLogQuery request, CancellationToken cancellationToken)
         {
             return await service.ApiLog(request);
         }
+
+        #endregion
     }
     #endregion
 
@@ -418,12 +461,15 @@ namespace RebuildProject.Service
             this.service = service;
         }
 
+        #region Public Methods
 
         public async Task<AddApiLogResult> Handle(AddApiLogCommand request, CancellationToken cancellationToken)
         {
             var resource = await service.AddApiLog(request);
             return resource;
         }
+
+        #endregion
     }
 
     #endregion

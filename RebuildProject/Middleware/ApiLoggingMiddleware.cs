@@ -14,14 +14,24 @@ namespace RebuildProject.Middleware
 {
     public class ApiLoggingMiddleware : IMiddleware
     {
+        #region Fields
+
         private readonly IMediator mediator;
         private readonly IOptionsMonitor<DbLoggingSettings> options;
+
+        #endregion
+
+        #region Constructor
 
         public ApiLoggingMiddleware(IMediator mediator, IOptionsMonitor<DbLoggingSettings> options)
         {
             this.mediator = mediator;
             this.options = options;
         }
+
+        #endregion
+
+        #region Public Methods
 
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
@@ -73,7 +83,8 @@ namespace RebuildProject.Middleware
                 ApiLog = log,
                 DaysToKeepLogEntry = options.CurrentValue.DaysToKeepLogEntry
             });
-
         }
+
+        #endregion
     }
 }

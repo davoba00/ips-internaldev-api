@@ -13,6 +13,8 @@ namespace RebuildProject
 {
     public static class HostingExtensions
     {
+        #region Public Methods
+
         public static WebApplicationBuilder ConfigureServices(this WebApplicationBuilder builder)
         {
             // TODO
@@ -69,6 +71,8 @@ namespace RebuildProject
 
             return app;
         }
+
+        #endregion
 
         #region Internal Methods
 

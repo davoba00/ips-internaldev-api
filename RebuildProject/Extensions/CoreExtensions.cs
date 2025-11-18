@@ -8,6 +8,8 @@ namespace RebuildProject.Extensions
 {
     public static class CoreExtensions
     {
+        #region Public Methods
+
         public static string Flatten(this Exception exception, string message = "", bool includeStackTrace = false)
         {
             StringBuilder stringBuilder = new StringBuilder(message);
@@ -106,5 +108,7 @@ namespace RebuildProject.Extensions
 
             return result;
         }
+
+        #endregion
     }
 }

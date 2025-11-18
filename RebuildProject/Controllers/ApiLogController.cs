@@ -13,9 +13,15 @@ namespace RebuildProject.Controllers
     [ApiController]
     public class ApiLogController : BaseODataController
     {
+        #region Constructor
+
         public ApiLogController(IMediator mediator) : base(mediator)
         {
         }
+
+        #endregion
+
+        #region Public Methods
 
         [EnableQuery]
         [HttpGet("apilog")]
@@ -60,7 +66,6 @@ namespace RebuildProject.Controllers
             return Ok(result.ApiLog);
         }
 
-
-
+        #endregion
     }
 }

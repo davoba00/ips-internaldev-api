@@ -6,6 +6,8 @@ namespace ODataResourceApi.Services.OData
 {
     public static class ApiODataModelBuilder
     {
+        #region Public Methods
+
         public static IEdmModel GetEdmModel()
         {
             var odataBuilder = new ODataConventionModelBuilder();
@@ -23,6 +25,6 @@ namespace ODataResourceApi.Services.OData
             return odataBuilder.GetEdmModel();
         }
 
-
+        #endregion
     }
 }

@@ -32,6 +32,7 @@ namespace RebuildProject.Controllers
         #endregion
 
         #region Public Methods
+
         [EnableQuery]
         [HttpGet("resource")]
         public async Task<IActionResult> Get(ODataQueryOptions<Resource> queryOptions)
@@ -131,6 +132,5 @@ namespace RebuildProject.Controllers
         }
 
         #endregion
-
     }
 }

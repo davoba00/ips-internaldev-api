@@ -7,12 +7,23 @@ namespace RebuildProject.Middleware
 {
     public class RequestMiddleware : IMiddleware
     {
+        #region Fields
+
         private readonly DbLoggingSettings settings;
+
+        #endregion
+
+        #region Constructor
 
         public RequestMiddleware(IOptionsMonitor<DbLoggingSettings> options)
         {
             this.settings = options.CurrentValue;
         }
+
+        #endregion
+
+        #region Public Methods
+
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
             if (!settings.Enable)
@@ -48,6 +59,10 @@ namespace RebuildProject.Middleware
 
         }
 
+        #endregion
+
+        #region Private Methods
+
         private bool ShouldLog(HttpRequest request)
         {
             if (!request.Path.HasValue)
@@ -71,5 +86,7 @@ namespace RebuildProject.Middleware
 
             return true;
         }
+
+        #endregion
     }
 }
