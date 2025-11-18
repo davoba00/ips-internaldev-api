@@ -29,7 +29,6 @@ namespace RebuildProject.Middleware
                 RequestId = Guid.NewGuid(),
                 RequestTime = DateTime.UtcNow,
                 RequestHeaders = JsonConvert.SerializeObject(request.Headers),
-                //todo RequestBody 
                 QueryString = request.QueryString.ToString(),
                 RequestUrl = request.GetDisplayUrl(),
                 RequestMethod = request.Method
