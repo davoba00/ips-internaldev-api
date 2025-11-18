@@ -80,9 +80,7 @@ namespace RebuildProject.Middleware
             //request 
 
             // - get request information 
-
-
-            var log = context.Items["ApiLog"] as ApiLog;
+            var log = context.Features.Get<ApiLog>();
 
             if (log == null)
             {

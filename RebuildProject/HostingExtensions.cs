@@ -34,8 +34,7 @@ namespace RebuildProject
                  .AddODataRoutes()
                  .AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
-            builder.Services.Configure<DbLoggingSettings>(
-                    builder.Configuration.GetSection("DbLogging"));
+            builder.Services.Configure<DbLoggingSettings>(builder.Configuration.GetSection("DbLogging"));
 
 
             builder.Services.Scan(scan => scan

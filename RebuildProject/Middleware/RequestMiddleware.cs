@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Http.Extensions;
+﻿using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RebuildProject.Models;
@@ -10,9 +9,9 @@ namespace RebuildProject.Middleware
     {
         private readonly DbLoggingSettings settings;
 
-        public RequestMiddleware(IOptions<DbLoggingSettings> options)
+        public RequestMiddleware(IOptionsMonitor<DbLoggingSettings> options)
         {
-            this.settings = options.Value;
+            this.settings = options.CurrentValue;
         }
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
@@ -21,6 +20,13 @@ namespace RebuildProject.Middleware
                 await next(context);
                 return;
             }
+
+            // Da definesem flag koji bi bio should log, da li treba da zapocem u zavisnosti od uslova, ako naletim na $metadata, should log treba da vrati false
+
+            //Ne loguj mi req za metadata, odradi
+
+
+
             var request = context.Request;
 
             var log = new ApiLog
@@ -34,7 +40,7 @@ namespace RebuildProject.Middleware
                 RequestMethod = request.Method
             };
 
-            context.Items["ApiLog"] = log;
+            context.Features.Set<ApiLog>(log);
 
             await next(context);
 
