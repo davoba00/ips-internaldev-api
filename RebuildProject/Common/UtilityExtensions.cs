@@ -1,5 +1,4 @@
-﻿using Microsoft.OData.ModelBuilder;
-using System.Net.NetworkInformation;
+﻿using System.Net.NetworkInformation;
 using static RebuildProject.Common.Enums;
 
 namespace RebuildProject.Common

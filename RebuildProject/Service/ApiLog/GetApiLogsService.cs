@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.OData.Query;
 using RebuildProject.Models;
 
-// TODO
-// - add single space between code
-
 namespace RebuildProject.Service
 {
     #region Query
@@ -46,6 +43,7 @@ namespace RebuildProject.Service
         public async Task<GetApiLogsResult> ApiLogs(GetApiLogsQuery query)
         {
             var list = db.ApiLogs.AsQueryable();
+
             return await Task.FromResult(new GetApiLogsResult
             {
                 ApiLogs = list

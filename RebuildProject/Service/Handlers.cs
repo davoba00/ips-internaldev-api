@@ -1,10 +1,6 @@
 ﻿using FluentResults;
 using MediatR;
-using RebuildProject.Models;
 
-// TODO:
-// - Order regions by GET, ADD, UPDATE, DELETE
-//
 namespace RebuildProject.Service
 {
 
@@ -76,122 +72,6 @@ namespace RebuildProject.Service
 
     #endregion
 
-    #region DeleteResourceCommand
-
-    public partial class DeleteResourceCommand : IRequest<DeleteResourceResult>
-    {
-    }
-
-    public partial class DeleteResourceResult
-    {
-    }
-
-    public interface IDeleteResourceService
-    {
-        Task<DeleteResourceResult> DeleteResource(DeleteResourceCommand query);
-    }
-
-
-    public class DeleteRequestHandler : IRequestHandler<DeleteResourceCommand, DeleteResourceResult>
-    {
-
-        private readonly IDeleteResourceService service;
-
-        public DeleteRequestHandler(IDeleteResourceService service)
-        {
-            this.service = service;
-        }
-
-        #region Public Methods
-
-        public async Task<DeleteResourceResult> Handle(DeleteResourceCommand request, CancellationToken cancellationToken)
-        {
-            var resource = await service.DeleteResource(request);
-            return resource;
-        }
-
-        #endregion
-    }
-
-    #endregion
-
-    #region AddResourceCommand
-
-    public partial class AddResourceCommand : IRequest<AddResourceResult>
-    {
-    }
-
-    public partial class AddResourceResult : Result
-    {
-        public bool IsValid { get; set; }
-    }
-    public interface IAddResourceService
-    {
-        Task<AddResourceResult> AddResource(AddResourceCommand query);
-    }
-
-
-    public class AddRequestHandler : IRequestHandler<AddResourceCommand, AddResourceResult>
-    {
-
-        private readonly IAddResourceService service;
-
-        public AddRequestHandler(IAddResourceService service)
-        {
-            this.service = service;
-        }
-
-        #region Public Methods
-
-        public async Task<AddResourceResult> Handle(AddResourceCommand request, CancellationToken cancellationToken)
-        {
-            var resource = await service.AddResource(request);
-            return resource;
-        }
-
-        #endregion
-
-    }
-    #endregion
-
-    #region PatchResourceCommand
-
-    public partial class PatchResourceCommand : IRequest<PatchResourceResult>
-    {
-
-    }
-
-    public partial class PatchResourceResult : Result
-    {
-    }
-    public interface IUpdateResourceService
-    {
-        Task<PatchResourceResult> PatchResource(PatchResourceCommand query);
-    }
-
-
-    public class PatchRequestHandler : IRequestHandler<PatchResourceCommand, PatchResourceResult>
-    {
-
-        private readonly IUpdateResourceService service;
-
-        public PatchRequestHandler(IUpdateResourceService service)
-        {
-            this.service = service;
-        }
-
-        #region Public Methods
-
-        public async Task<PatchResourceResult> Handle(PatchResourceCommand request, CancellationToken cancellationToken)
-        {
-            var resource = await service.PatchResource(request);
-            return resource;
-        }
-
-        #endregion
-    }
-    #endregion
-
     #region GetResourcesItemQuery
 
     public partial class GetResourcesItemQuery : IRequest<GetResourcesItemResult> { }
@@ -252,120 +132,6 @@ namespace RebuildProject.Service
         public async Task<GetResourceItemResult> Handle(GetResourceItemQuery request, CancellationToken cancellationToken)
         {
             return await service.GetResource(request);
-        }
-
-        #endregion
-    }
-    #endregion
-
-    #region DeleteResourceCommand
-
-    public partial class DeleteResourceItemCommand : IRequest<DeleteResourceItemResult>
-    {
-    }
-
-    public partial class DeleteResourceItemResult : Result
-    {
-    }
-
-    public interface IDeleteResourceItemService
-    {
-        Task<DeleteResourceItemResult> DeleteResourceItem(DeleteResourceItemCommand query);
-    }
-
-
-    public class DeleteResourceItemRequestHandler : IRequestHandler<DeleteResourceItemCommand, DeleteResourceItemResult>
-    {
-
-        private readonly IDeleteResourceItemService service;
-
-        public DeleteResourceItemRequestHandler(IDeleteResourceItemService service)
-        {
-            this.service = service;
-        }
-
-        #region Public Methods
-
-        public async Task<DeleteResourceItemResult> Handle(DeleteResourceItemCommand request, CancellationToken cancellationToken)
-        {
-            var resource = await service.DeleteResourceItem(request);
-            return resource;
-        }
-
-        #endregion
-    }
-    #endregion
-
-    #region PatchResourceCommand
-
-    public partial class PatchResourceItemCommand : IRequest<PatchResourceItemResult>
-    {
-
-    }
-
-    public partial class PatchResourceItemResult : Result
-    {
-    }
-    public interface IUpdateResourceItemService
-    {
-        Task<PatchResourceItemResult> PatchResourceItem(PatchResourceItemCommand query);
-    }
-
-
-    public class PatchRequestItemHandler : IRequestHandler<PatchResourceItemCommand, PatchResourceItemResult>
-    {
-
-        private readonly IUpdateResourceItemService service;
-
-        public PatchRequestItemHandler(IUpdateResourceItemService service)
-        {
-            this.service = service;
-        }
-
-        #region Public Methods
-
-        public async Task<PatchResourceItemResult> Handle(PatchResourceItemCommand request, CancellationToken cancellationToken)
-        {
-            var resource = await service.PatchResourceItem(request);
-            return resource;
-        }
-
-        #endregion
-    }
-    #endregion
-
-    #region AddResourceCommand
-
-    public partial class AddResourceItemCommand : IRequest<AddResourceItemResult>
-    {
-    }
-
-    public partial class AddResourceItemResult : Result
-    {
-
-    }
-    public interface IAddResourceItemService
-    {
-        Task<AddResourceItemResult> AddResourceItem(AddResourceItemCommand query);
-    }
-
-
-    public class AddRequestItemHandler : IRequestHandler<AddResourceItemCommand, AddResourceItemResult>
-    {
-
-        private readonly IAddResourceItemService service;
-
-        public AddRequestItemHandler(IAddResourceItemService service)
-        {
-            this.service = service;
-        }
-
-        #region Public Methods
-
-        public async Task<AddResourceItemResult> Handle(AddResourceItemCommand request, CancellationToken cancellationToken)
-        {
-            var resource = await service.AddResourceItem(request);
-            return resource;
         }
 
         #endregion
@@ -440,6 +206,83 @@ namespace RebuildProject.Service
 
     #region AddResourceCommand
 
+    public partial class AddResourceCommand : IRequest<AddResourceResult>
+    {
+    }
+
+    public partial class AddResourceResult : Result
+    {
+        public bool IsValid { get; set; }
+    }
+    public interface IAddResourceService
+    {
+        Task<AddResourceResult> AddResource(AddResourceCommand query);
+    }
+
+
+    public class AddRequestHandler : IRequestHandler<AddResourceCommand, AddResourceResult>
+    {
+
+        private readonly IAddResourceService service;
+
+        public AddRequestHandler(IAddResourceService service)
+        {
+            this.service = service;
+        }
+
+        #region Public Methods
+
+        public async Task<AddResourceResult> Handle(AddResourceCommand request, CancellationToken cancellationToken)
+        {
+            var resource = await service.AddResource(request);
+            return resource;
+        }
+
+        #endregion
+
+    }
+    #endregion
+
+    #region AddResourceCommandItem
+
+    public partial class AddResourceItemCommand : IRequest<AddResourceItemResult>
+    {
+    }
+
+    public partial class AddResourceItemResult : Result
+    {
+
+    }
+    public interface IAddResourceItemService
+    {
+        Task<AddResourceItemResult> AddResourceItem(AddResourceItemCommand query);
+    }
+
+
+    public class AddRequestItemHandler : IRequestHandler<AddResourceItemCommand, AddResourceItemResult>
+    {
+
+        private readonly IAddResourceItemService service;
+
+        public AddRequestItemHandler(IAddResourceItemService service)
+        {
+            this.service = service;
+        }
+
+        #region Public Methods
+
+        public async Task<AddResourceItemResult> Handle(AddResourceItemCommand request, CancellationToken cancellationToken)
+        {
+            var resource = await service.AddResourceItem(request);
+            return resource;
+        }
+
+        #endregion
+    }
+    #endregion
+
+    #region AddApiLogCommand
+
     public partial class AddApiLogCommand : IRequest<AddApiLogResult>
     {
     }
@@ -475,5 +318,158 @@ namespace RebuildProject.Service
         #endregion
     }
 
+    #endregion
+
+    #region PatchResourceItemCommand
+
+    public partial class PatchResourceItemCommand : IRequest<PatchResourceItemResult>
+    {
+
+    }
+
+    public partial class PatchResourceItemResult : Result
+    {
+    }
+    public interface IUpdateResourceItemService
+    {
+        Task<PatchResourceItemResult> PatchResourceItem(PatchResourceItemCommand query);
+    }
+
+
+    public class PatchRequestItemHandler : IRequestHandler<PatchResourceItemCommand, PatchResourceItemResult>
+    {
+
+        private readonly IUpdateResourceItemService service;
+
+        public PatchRequestItemHandler(IUpdateResourceItemService service)
+        {
+            this.service = service;
+        }
+
+        #region Public Methods
+
+        public async Task<PatchResourceItemResult> Handle(PatchResourceItemCommand request, CancellationToken cancellationToken)
+        {
+            var resource = await service.PatchResourceItem(request);
+            return resource;
+        }
+
+        #endregion
+    }
+    #endregion
+
+    #region PatchResourceCommand
+
+    public partial class PatchResourceCommand : IRequest<PatchResourceResult>
+    {
+
+    }
+
+    public partial class PatchResourceResult : Result
+    {
+    }
+    public interface IUpdateResourceService
+    {
+        Task<PatchResourceResult> PatchResource(PatchResourceCommand query);
+    }
+
+
+    public class PatchRequestHandler : IRequestHandler<PatchResourceCommand, PatchResourceResult>
+    {
+
+        private readonly IUpdateResourceService service;
+
+        public PatchRequestHandler(IUpdateResourceService service)
+        {
+            this.service = service;
+        }
+
+        #region Public Methods
+
+        public async Task<PatchResourceResult> Handle(PatchResourceCommand request, CancellationToken cancellationToken)
+        {
+            var resource = await service.PatchResource(request);
+            return resource;
+        }
+
+        #endregion
+    }
+    #endregion
+
+    #region DeleteResourceCommand
+
+    public partial class DeleteResourceCommand : IRequest<DeleteResourceResult>
+    {
+    }
+
+    public partial class DeleteResourceResult
+    {
+    }
+
+    public interface IDeleteResourceService
+    {
+        Task<DeleteResourceResult> DeleteResource(DeleteResourceCommand query);
+    }
+
+
+    public class DeleteRequestHandler : IRequestHandler<DeleteResourceCommand, DeleteResourceResult>
+    {
+
+        private readonly IDeleteResourceService service;
+
+        public DeleteRequestHandler(IDeleteResourceService service)
+        {
+            this.service = service;
+        }
+
+        #region Public Methods
+
+        public async Task<DeleteResourceResult> Handle(DeleteResourceCommand request, CancellationToken cancellationToken)
+        {
+            var resource = await service.DeleteResource(request);
+            return resource;
+        }
+
+        #endregion
+    }
+
+    #endregion
+
+    #region DeleteResourceCommand
+
+    public partial class DeleteResourceItemCommand : IRequest<DeleteResourceItemResult>
+    {
+    }
+
+    public partial class DeleteResourceItemResult : Result
+    {
+    }
+
+    public interface IDeleteResourceItemService
+    {
+        Task<DeleteResourceItemResult> DeleteResourceItem(DeleteResourceItemCommand query);
+    }
+
+
+    public class DeleteResourceItemRequestHandler : IRequestHandler<DeleteResourceItemCommand, DeleteResourceItemResult>
+    {
+
+        private readonly IDeleteResourceItemService service;
+
+        public DeleteResourceItemRequestHandler(IDeleteResourceItemService service)
+        {
+            this.service = service;
+        }
+
+        #region Public Methods
+
+        public async Task<DeleteResourceItemResult> Handle(DeleteResourceItemCommand request, CancellationToken cancellationToken)
+        {
+            var resource = await service.DeleteResourceItem(request);
+            return resource;
+        }
+
+        #endregion
+    }
     #endregion
 }

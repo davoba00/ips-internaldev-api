@@ -24,7 +24,6 @@ namespace RebuildProject.Service
 
     #endregion
 
-
     public class UpdateResourceItemService : IUpdateResourceItemService
     {
         #region Fields

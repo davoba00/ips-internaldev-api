@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNetCore.OData.Query;
+﻿using Microsoft.AspNetCore.OData.Query;
 using RebuildProject.Models;
 
 namespace RebuildProject.Service

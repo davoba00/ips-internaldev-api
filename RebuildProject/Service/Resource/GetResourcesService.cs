@@ -1,12 +1,6 @@
-﻿
-using MediatR;
-using Microsoft.AspNetCore.OData.Query;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.AspNetCore.OData.Query;
 using RebuildProject.Models;
 
-// TODO
-// - remove extra space
-//
 namespace RebuildProject.Service
 {
     #region Query
@@ -26,7 +20,6 @@ namespace RebuildProject.Service
     }
 
     #endregion
-
 
     public class GetResourcesService : IGetResourcesService
     {

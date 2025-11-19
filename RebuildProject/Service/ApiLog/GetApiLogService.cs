@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.OData.Query;
 using RebuildProject.Models;
 
-// TODO
-// - finish the implementation
 namespace RebuildProject.Service
 {
     #region Query
@@ -45,11 +43,11 @@ namespace RebuildProject.Service
 
         public async Task<GetApiLogResult> ApiLog(GetApiLogQuery query)
         {
-            //var dataSql = db.ApiLogs.Where(x => x.LogId == query.Id);
+            var dataSql = db.ApiLogs.Where(x => x.LogId == query.Id);
 
             return await Task.FromResult(new GetApiLogResult
             {
-                //ApiLog = dataSql
+                ApiLog = dataSql
             });
 
         }

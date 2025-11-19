@@ -1,21 +1,14 @@
-﻿using FluentResults;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Deltas;
 using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Results;
-using Microsoft.AspNetCore.OData.Routing.Controllers;
 using RebuildProject.Models;
 using RebuildProject.Service;
 using static RebuildProject.Common.Constants;
 
 namespace RebuildProject.Controllers
 {
-    // TODO: remove
-    // - remove mediator constructor assignment if not used
-    // - remove unused `usings`, `commented codes`
-    // - add `this.` 
-    //
     [Route(ApiRoutes.Default)]
     [ApiController]
     public class ResourceItemController : BaseODataController
@@ -68,7 +61,6 @@ namespace RebuildProject.Controllers
             {
                 return this.StatusCode(added);
             }
-
 
             return Ok(added.Resource);
         }

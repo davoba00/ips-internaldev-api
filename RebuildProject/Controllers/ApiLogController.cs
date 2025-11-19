@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Results;
@@ -9,11 +8,6 @@ using static RebuildProject.Common.Constants;
 
 namespace RebuildProject.Controllers
 {
-    // TODO: remove
-    // - remove mediator constructor assignment if not used
-    // - remove unused `usings`, `commented codes`
-    // - add `this.` 
-    //
     [Route(ApiRoutes.Default)]
     [ApiController]
     public class ApiLogController : BaseODataController

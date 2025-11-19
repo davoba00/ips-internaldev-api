@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace RebuildProject.Models;
+﻿namespace RebuildProject.Models;
 
 public partial class ApiLog
 {

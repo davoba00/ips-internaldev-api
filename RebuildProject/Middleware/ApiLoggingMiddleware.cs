@@ -1,14 +1,10 @@
-﻿using Azure.Core;
-using MediatR;
-using Microsoft.AspNetCore.Http.Extensions;
+﻿using MediatR;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RebuildProject.Extensions;
 using RebuildProject.Models;
 using RebuildProject.Service;
 using System.Net;
-using System.Text;
-using System.Text.Json.Serialization;
 
 namespace RebuildProject.Middleware
 {

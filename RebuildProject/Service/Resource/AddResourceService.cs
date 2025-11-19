@@ -1,7 +1,4 @@
-﻿using FluentResults;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
-using RebuildProject.Common;
+﻿using RebuildProject.Common;
 using RebuildProject.Models;
 
 namespace RebuildProject.Service
