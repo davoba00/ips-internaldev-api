@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using RebuildProject.Common;
 using RebuildProject.Models;
+using System.Resources;
 
 namespace RebuildProject.Service
 {
@@ -49,11 +50,12 @@ namespace RebuildProject.Service
 
             if (resource == null)
             {
-                // TODO
-                // - add new PatchResourceResult();
-                return new PatchResourceResult
-                {
-                };
+                var result = new PatchResourceResult();
+
+                result.WithError("Resource not found");
+                
+                return result;
+
             }
 
             query.Delta.Patch(resource);

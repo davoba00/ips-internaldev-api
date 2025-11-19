@@ -49,9 +49,11 @@ namespace RebuildProject.Service
 
             if (resource == null)
             {
-                return new PatchResourceItemResult
-                {
-                };
+                var result = new PatchResourceItemResult();
+
+                result.WithError("Resource not found");
+
+                return result;
             }
 
             query.Delta.Patch(resource);

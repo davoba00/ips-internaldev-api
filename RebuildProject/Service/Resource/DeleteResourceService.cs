@@ -17,6 +17,7 @@ namespace RebuildProject.Service
 
     public partial class DeleteResourceResult
     {
+
     }
 
     #endregion
@@ -45,15 +46,17 @@ namespace RebuildProject.Service
 
             if (existingSql == null)
             {
-                return null;
+                var result = new DeleteResourceResult();
+
+                result.WithError("Resource not found");
+
+                return result;
             }
 
             existingSql.UpdateIpsFields(Enums.OperationType.Delete);
 
             db.SaveChanges();
 
-            // TODO
-            // add DeleteResourceResult();
             return new DeleteResourceResult { };
         }
 

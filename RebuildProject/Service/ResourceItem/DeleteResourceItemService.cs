@@ -44,7 +44,14 @@ namespace RebuildProject.Service
         {
             var existingSql = await db.ResourceItems.FirstOrDefaultAsync(cus => cus.ResourceItemId == query.Id);
 
-            if (existingSql == null) return null;
+            if (existingSql == null)
+            {
+                var result = new DeleteResourceItemResult();
+
+                result.WithError("ResourceItem not found");
+
+                return result;
+            }
 
             existingSql.UpdateIpsFields(Enums.OperationType.Create);
 

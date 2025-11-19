@@ -13,12 +13,11 @@ namespace RebuildProject.Controllers
     [ApiController]
     public class ResourceController : BaseODataController
     {
-
         #region Constructors
 
         public ResourceController(IMediator mediator) : base(mediator)
         {
-            
+
         }
 
         #endregion
@@ -36,7 +35,7 @@ namespace RebuildProject.Controllers
 
             if (result.IsFailed || result.Resources == null)
             {
-                return this.StatusCode(result);                
+                return this.StatusCode(result);
             }
 
             return Ok(result.Resources);
@@ -91,7 +90,7 @@ namespace RebuildProject.Controllers
         [HttpDelete("resource/{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            await mediator.Send(new DeleteResourceCommand
+            var deleteResult = await mediator.Send(new DeleteResourceCommand
             {
                 Id = id
             });
@@ -101,12 +100,12 @@ namespace RebuildProject.Controllers
                 Id = id
             });
 
-            if (result.IsFailed)
+            if (deleteResult.IsFailed)
             {
-                return this.StatusCode(result);
+                return this.StatusCode(deleteResult);
             }
 
-            return NoContent();
+            return Ok(result);
         }
 
         [HttpPatch("resource/{id:guid}")]

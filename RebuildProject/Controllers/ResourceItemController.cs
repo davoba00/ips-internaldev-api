@@ -37,7 +37,7 @@ namespace RebuildProject.Controllers
         }
 
         [EnableQuery]
-        [HttpGet("resourceitem/{id}")]
+        [HttpGet("resourceitem/{id:guid}")]
         public async Task<SingleResult<ResourceItem>> Get(Guid id, ODataQueryOptions<ResourceItem> queryOptions)
         {
             var result = await mediator.Send(new GetResourceItemQuery
@@ -68,7 +68,7 @@ namespace RebuildProject.Controllers
         [HttpDelete("resourceItem/{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            await mediator.Send(new DeleteResourceItemCommand
+            var deleteResult = await mediator.Send(new DeleteResourceItemCommand
             {
                 Id = id
             });
@@ -78,9 +78,9 @@ namespace RebuildProject.Controllers
                 Id = id
             });
 
-            if (result.IsFailed)
+            if (deleteResult.IsFailed)
             {
-                return this.StatusCode(result);
+                return this.StatusCode(deleteResult);
             }
 
             return NoContent();

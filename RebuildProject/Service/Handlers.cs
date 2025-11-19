@@ -402,7 +402,7 @@ namespace RebuildProject.Service
     {
     }
 
-    public partial class DeleteResourceResult
+    public partial class DeleteResourceResult : Result
     {
     }
 
@@ -435,7 +435,7 @@ namespace RebuildProject.Service
 
     #endregion
 
-    #region DeleteResourceCommand
+    #region DeleteResourceItemCommand
 
     public partial class DeleteResourceItemCommand : IRequest<DeleteResourceItemResult>
     {
