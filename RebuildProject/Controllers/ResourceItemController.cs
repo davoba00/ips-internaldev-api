@@ -26,7 +26,7 @@ namespace RebuildProject.Controllers
 
         [EnableQuery]
         [HttpGet("resourceitem")]
-        public async Task<IQueryable<ResourceItem>> Get(ODataQueryOptions<ResourceItem> queryOptions)
+        public async Task<List<ResourceItem>> Get(ODataQueryOptions<ResourceItem> queryOptions)
         {
             var result = await this.mediator.Send(new GetResourcesItemQuery
             {
@@ -40,7 +40,7 @@ namespace RebuildProject.Controllers
         [HttpGet("resourceitem/{id:guid}")]
         public async Task<SingleResult<ResourceItem>> Get(Guid id, ODataQueryOptions<ResourceItem> queryOptions)
         {
-            var result = await mediator.Send(new GetResourceItemQuery
+            var result = await this.mediator.Send(new GetResourceItemQuery
             {
                 QueryOptions = queryOptions,
                 Id = id
@@ -52,7 +52,7 @@ namespace RebuildProject.Controllers
         [HttpPost("resourceItem")]
         public async Task<IActionResult> Post([FromBody] ResourceItem resource)
         {
-            var added = await mediator.Send(new AddResourceItemCommand
+            var added = await this.mediator.Send(new AddResourceItemCommand
             {
                 ResourceItem = resource
             });
@@ -68,12 +68,12 @@ namespace RebuildProject.Controllers
         [HttpDelete("resourceItem/{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var deleteResult = await mediator.Send(new DeleteResourceItemCommand
+            var deleteResult = await this.mediator.Send(new DeleteResourceItemCommand
             {
                 Id = id
             });
 
-            var result = await mediator.Send(new GetResourceItemQuery
+            var result = await this.mediator.Send(new GetResourceItemQuery
             {
                 Id = id
             });
@@ -89,7 +89,7 @@ namespace RebuildProject.Controllers
         [HttpPatch("resourceItem/{id:guid}")]
         public async Task<IActionResult> Patch(Guid id, [FromBody] Delta<ResourceItem> delta)
         {
-            var resoure = await mediator.Send(new PatchResourceItemCommand
+            var resoure = await this.mediator.Send(new PatchResourceItemCommand
             {
                 Id = id,
                 Delta = delta

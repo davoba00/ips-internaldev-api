@@ -44,16 +44,16 @@ namespace RebuildProject.Service
 
         #region Public Methods
 
-        public async Task<PatchResourceResult> PatchResource(PatchResourceCommand query)
+        public async Task<PatchResourceResult> PatchResource(PatchResourceCommand query, CancellationToken cancellationToken)
         {
-            var resource = await db.Resources.FirstOrDefaultAsync(r => r.ResourceId == query.Id);
+            var resource = await db.Resources.FirstOrDefaultAsync(r => r.ResourceId == query.Id, cancellationToken);
 
             if (resource == null)
             {
                 var result = new PatchResourceResult();
 
                 result.WithError("Resource not found");
-                
+
                 return result;
 
             }
@@ -62,7 +62,7 @@ namespace RebuildProject.Service
 
             resource.UpdateIpsFields(Enums.OperationType.Update);
 
-            await db.SaveChangesAsync();
+            await db.SaveChangesAsync(cancellationToken);
 
             return new PatchResourceResult
             {

@@ -40,12 +40,12 @@ namespace RebuildProject.Service
 
         #region Public Methods
 
-        public async Task<GetApiLogsResult> ApiLogs(GetApiLogsQuery query)
+        public async Task<GetApiLogsResult> ApiLogs(GetApiLogsQuery query, CancellationToken cancellationToken)
         {
-            var list = db.ApiLogs.AsQueryable();
+                var list = db.ApiLogs.AsQueryable();
 
-            return await Task.FromResult(new GetApiLogsResult
-            {
+                return await Task.FromResult(new GetApiLogsResult
+                {
                 ApiLogs = list
             });
         }

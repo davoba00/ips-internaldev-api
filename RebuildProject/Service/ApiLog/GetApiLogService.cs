@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.OData.Query;
+using Microsoft.EntityFrameworkCore;
 using RebuildProject.Models;
 
 namespace RebuildProject.Service
@@ -41,7 +42,7 @@ namespace RebuildProject.Service
 
         #region Public Methods
 
-        public async Task<GetApiLogResult> ApiLog(GetApiLogQuery query)
+        public async Task<GetApiLogResult> ApiLog(GetApiLogQuery query, CancellationToken cancellationToken)
         {
             var dataSql = db.ApiLogs.Where(x => x.LogId == query.Id);
 

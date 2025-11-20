@@ -43,9 +43,9 @@ namespace RebuildProject.Service
 
         #region Public Methods
 
-        public async Task<PatchResourceItemResult> PatchResourceItem(PatchResourceItemCommand query)
+        public async Task<PatchResourceItemResult> PatchResourceItem(PatchResourceItemCommand query, CancellationToken cancellationToken)
         {
-            var resource = await db.ResourceItems.FirstOrDefaultAsync(r => r.ResourceItemId == query.Id);
+            var resource = await db.ResourceItems.FirstOrDefaultAsync(r => r.ResourceItemId == query.Id, cancellationToken);
 
             if (resource == null)
             {
@@ -60,7 +60,7 @@ namespace RebuildProject.Service
 
             resource.UpdateIpsFields(Enums.OperationType.Create);
 
-            await db.SaveChangesAsync();
+            await db.SaveChangesAsync(cancellationToken);
 
             return new PatchResourceItemResult
             {

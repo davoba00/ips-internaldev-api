@@ -42,7 +42,7 @@ namespace RebuildProject.Service
 
         #region Public Methods
 
-        public async Task<GetResourceResult> GetResource(GetResourceQuery query)
+        public async Task<GetResourceResult> GetResource(GetResourceQuery query, CancellationToken cancellationToken)
         {
             var dataSql = db.Resources.Where(x => x.ResourceId == query.Id && x.Deleted == null);
 

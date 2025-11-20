@@ -1,4 +1,5 @@
-﻿namespace RebuildProject.Models;
+﻿
+namespace RebuildProject.Models;
 
 public partial class ApiLog
 {
@@ -27,4 +28,9 @@ public partial class ApiLog
     public DateTime? RequestTime { get; set; }
 
     public DateTime? ResponseTime { get; set; }
+
+    public static implicit operator ApiLog(Task<ApiLog> v)
+    {
+        throw new NotImplementedException();
+    }
 }

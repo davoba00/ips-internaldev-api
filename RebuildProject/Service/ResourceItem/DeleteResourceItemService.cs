@@ -40,9 +40,9 @@ namespace RebuildProject.Service
 
         #region Public Methods
 
-        public async Task<DeleteResourceItemResult> DeleteResourceItem(DeleteResourceItemCommand query)
+        public async Task<DeleteResourceItemResult> DeleteResourceItem(DeleteResourceItemCommand query, CancellationToken cancellationToken)
         {
-            var existingSql = await db.ResourceItems.FirstOrDefaultAsync(cus => cus.ResourceItemId == query.Id);
+            var existingSql = await db.ResourceItems.FirstOrDefaultAsync(cus => cus.ResourceItemId == query.Id, cancellationToken);
 
             if (existingSql == null)
             {
@@ -55,7 +55,7 @@ namespace RebuildProject.Service
 
             existingSql.UpdateIpsFields(Enums.OperationType.Create);
 
-            db.SaveChanges();
+            await db.SaveChangesAsync(cancellationToken);
 
             return await Task.FromResult(new DeleteResourceItemResult { });
         }

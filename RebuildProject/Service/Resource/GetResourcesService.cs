@@ -40,7 +40,7 @@ namespace RebuildProject.Service
 
         #region Public Methods
 
-        public async Task<GetResourcesResult> GetResources(GetResourcesQuery query)
+        public async Task<GetResourcesResult> GetResources(GetResourcesQuery query,CancellationToken token)
         {
             var list = db.Resources.AsQueryable();
 

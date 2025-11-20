@@ -14,7 +14,7 @@ namespace RebuildProject.Service
 
     public interface IGetResourcesService
     {
-        Task<GetResourcesResult> GetResources(GetResourcesQuery query);
+        Task<GetResourcesResult> GetResources(GetResourcesQuery query, CancellationToken token);
     }
 
     public class GetResourcesHandler : IRequestHandler<GetResourcesQuery, GetResourcesResult>
@@ -30,7 +30,7 @@ namespace RebuildProject.Service
 
         public async Task<GetResourcesResult> Handle(GetResourcesQuery request, CancellationToken cancellationToken)
         {
-            return await service.GetResources(request);
+            return await service.GetResources(request, cancellationToken);
         }
 
         #endregion
@@ -47,7 +47,7 @@ namespace RebuildProject.Service
 
     public interface IGetResourceService
     {
-        Task<GetResourceResult> GetResource(GetResourceQuery query);
+        Task<GetResourceResult> GetResource(GetResourceQuery query, CancellationToken cancellationToken);
     }
 
     public class GetResourceByIdHandler : IRequestHandler<GetResourceQuery, GetResourceResult>
@@ -63,7 +63,7 @@ namespace RebuildProject.Service
 
         public async Task<GetResourceResult> Handle(GetResourceQuery request, CancellationToken cancellationToken)
         {
-            var resource = await service.GetResource(request);
+            var resource = await service.GetResource(request, cancellationToken);
             return resource;
         }
 
@@ -82,7 +82,7 @@ namespace RebuildProject.Service
 
     public interface IGetResourcesItemsService
     {
-        Task<GetResourcesItemResult> GetResources(GetResourcesItemQuery query);
+        Task<GetResourcesItemResult> GetResources(GetResourcesItemQuery query, CancellationToken cancellationToken);
     }
 
     public class GetResourcesItemHandler : IRequestHandler<GetResourcesItemQuery, GetResourcesItemResult>
@@ -98,7 +98,7 @@ namespace RebuildProject.Service
 
         public async Task<GetResourcesItemResult> Handle(GetResourcesItemQuery request, CancellationToken cancellationToken)
         {
-            return await service.GetResources(request);
+            return await service.GetResources(request, cancellationToken);
         }
 
         #endregion
@@ -115,7 +115,7 @@ namespace RebuildProject.Service
 
     public interface IGetResourceItemService
     {
-        Task<GetResourceItemResult> GetResource(GetResourceItemQuery query);
+        Task<GetResourceItemResult> GetResource(GetResourceItemQuery query, CancellationToken cancellationToken);
     }
 
     public class GetResourceItemHandler : IRequestHandler<GetResourceItemQuery, GetResourceItemResult>
@@ -131,7 +131,7 @@ namespace RebuildProject.Service
 
         public async Task<GetResourceItemResult> Handle(GetResourceItemQuery request, CancellationToken cancellationToken)
         {
-            return await service.GetResource(request);
+            return await service.GetResource(request, cancellationToken);
         }
 
         #endregion
@@ -148,7 +148,7 @@ namespace RebuildProject.Service
 
     public interface IGetApiLogsService
     {
-        Task<GetApiLogsResult> ApiLogs(GetApiLogsQuery query);
+        Task<GetApiLogsResult> ApiLogs(GetApiLogsQuery query, CancellationToken cancellationToken);
     }
 
     public class GetApiLogsHandler : IRequestHandler<GetApiLogsQuery, GetApiLogsResult>
@@ -164,7 +164,7 @@ namespace RebuildProject.Service
 
         public async Task<GetApiLogsResult> Handle(GetApiLogsQuery request, CancellationToken cancellationToken)
         {
-            return await service.ApiLogs(request);
+            return await service.ApiLogs(request, cancellationToken);
         }
 
         #endregion
@@ -181,7 +181,7 @@ namespace RebuildProject.Service
 
     public interface IGetApiLogService
     {
-        Task<GetApiLogResult> ApiLog(GetApiLogQuery query);
+        Task<GetApiLogResult> ApiLog(GetApiLogQuery query, CancellationToken cancellationToken);
     }
 
     public class GetApiLogHandler : IRequestHandler<GetApiLogQuery, GetApiLogResult>
@@ -197,7 +197,7 @@ namespace RebuildProject.Service
 
         public async Task<GetApiLogResult> Handle(GetApiLogQuery request, CancellationToken cancellationToken)
         {
-            return await service.ApiLog(request);
+            return await service.ApiLog(request, cancellationToken);
         }
 
         #endregion
@@ -216,7 +216,7 @@ namespace RebuildProject.Service
     }
     public interface IAddResourceService
     {
-        Task<AddResourceResult> AddResource(AddResourceCommand query);
+        Task<AddResourceResult> AddResource(AddResourceCommand query, CancellationToken cancellationToken);
     }
 
 
@@ -234,7 +234,7 @@ namespace RebuildProject.Service
 
         public async Task<AddResourceResult> Handle(AddResourceCommand request, CancellationToken cancellationToken)
         {
-            var resource = await service.AddResource(request);
+            var resource = await service.AddResource(request, cancellationToken);
             return resource;
         }
 
@@ -255,7 +255,7 @@ namespace RebuildProject.Service
     }
     public interface IAddResourceItemService
     {
-        Task<AddResourceItemResult> AddResourceItem(AddResourceItemCommand query);
+        Task<AddResourceItemResult> AddResourceItem(AddResourceItemCommand query, CancellationToken cancellationToken);
     }
 
 
@@ -273,7 +273,7 @@ namespace RebuildProject.Service
 
         public async Task<AddResourceItemResult> Handle(AddResourceItemCommand request, CancellationToken cancellationToken)
         {
-            var resource = await service.AddResourceItem(request);
+            var resource = await service.AddResourceItem(request, cancellationToken);
             return resource;
         }
 
@@ -293,7 +293,7 @@ namespace RebuildProject.Service
     }
     public interface IAddApiLogService
     {
-        Task<AddApiLogResult> AddApiLog(AddApiLogCommand query);
+        Task<AddApiLogResult> AddApiLog(AddApiLogCommand query, CancellationToken cancellationToken);
     }
 
 
@@ -311,7 +311,7 @@ namespace RebuildProject.Service
 
         public async Task<AddApiLogResult> Handle(AddApiLogCommand request, CancellationToken cancellationToken)
         {
-            var resource = await service.AddApiLog(request);
+            var resource = await service.AddApiLog(request, cancellationToken);
             return resource;
         }
 
@@ -332,7 +332,7 @@ namespace RebuildProject.Service
     }
     public interface IUpdateResourceItemService
     {
-        Task<PatchResourceItemResult> PatchResourceItem(PatchResourceItemCommand query);
+        Task<PatchResourceItemResult> PatchResourceItem(PatchResourceItemCommand query, CancellationToken cancellationToken);
     }
 
 
@@ -350,7 +350,7 @@ namespace RebuildProject.Service
 
         public async Task<PatchResourceItemResult> Handle(PatchResourceItemCommand request, CancellationToken cancellationToken)
         {
-            var resource = await service.PatchResourceItem(request);
+            var resource = await service.PatchResourceItem(request, cancellationToken);
             return resource;
         }
 
@@ -370,7 +370,7 @@ namespace RebuildProject.Service
     }
     public interface IUpdateResourceService
     {
-        Task<PatchResourceResult> PatchResource(PatchResourceCommand query);
+        Task<PatchResourceResult> PatchResource(PatchResourceCommand query, CancellationToken cancellationToken);
     }
 
 
@@ -388,7 +388,7 @@ namespace RebuildProject.Service
 
         public async Task<PatchResourceResult> Handle(PatchResourceCommand request, CancellationToken cancellationToken)
         {
-            var resource = await service.PatchResource(request);
+            var resource = await service.PatchResource(request, cancellationToken);
             return resource;
         }
 
@@ -408,7 +408,7 @@ namespace RebuildProject.Service
 
     public interface IDeleteResourceService
     {
-        Task<DeleteResourceResult> DeleteResource(DeleteResourceCommand query);
+        Task<DeleteResourceResult> DeleteResource(DeleteResourceCommand query, CancellationToken cancellationToken);
     }
 
 
@@ -426,7 +426,7 @@ namespace RebuildProject.Service
 
         public async Task<DeleteResourceResult> Handle(DeleteResourceCommand request, CancellationToken cancellationToken)
         {
-            var resource = await service.DeleteResource(request);
+            var resource = await service.DeleteResource(request, cancellationToken);
             return resource;
         }
 
@@ -447,7 +447,7 @@ namespace RebuildProject.Service
 
     public interface IDeleteResourceItemService
     {
-        Task<DeleteResourceItemResult> DeleteResourceItem(DeleteResourceItemCommand query);
+        Task<DeleteResourceItemResult> DeleteResourceItem(DeleteResourceItemCommand query, CancellationToken cancellationToken);
     }
 
 
@@ -465,7 +465,7 @@ namespace RebuildProject.Service
 
         public async Task<DeleteResourceItemResult> Handle(DeleteResourceItemCommand request, CancellationToken cancellationToken)
         {
-            var resource = await service.DeleteResourceItem(request);
+            var resource = await service.DeleteResourceItem(request, cancellationToken);
             return resource;
         }
 

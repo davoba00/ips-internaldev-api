@@ -1,4 +1,5 @@
-﻿using MediatR.Pipeline;
+﻿using MediatR;
+using MediatR.Pipeline;
 using Microsoft.AspNetCore.OData;
 using Microsoft.EntityFrameworkCore;
 using NLog.Web;
@@ -31,6 +32,11 @@ namespace RebuildProject
             builder.Services
                  .AddODataRoutes()
                  .AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+
+            builder.Services.AddHttpContextAccessor();
+
+            builder.Services.AddTransient(typeof(IPipelineBehavior<,>),
+                                          typeof(RequestCancellationBehavior<,>));
 
             builder.Services.Configure<DbLoggingSettings>(builder.Configuration.GetSection("DbLogging"));
 

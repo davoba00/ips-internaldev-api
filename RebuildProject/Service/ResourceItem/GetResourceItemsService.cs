@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.OData.Query;
+using Microsoft.EntityFrameworkCore;
 using RebuildProject.Models;
 
 namespace RebuildProject.Service
@@ -16,7 +17,7 @@ namespace RebuildProject.Service
 
     public partial class GetResourcesItemResult
     {
-        public IQueryable<ResourceItem> Resources { get; set; }
+        public List<ResourceItem> Resources { get; set; }
     }
 
     #endregion
@@ -40,13 +41,13 @@ namespace RebuildProject.Service
 
         #region Public Methods
 
-        public async Task<GetResourcesItemResult> GetResources(GetResourcesItemQuery query)
+        public async Task<GetResourcesItemResult> GetResources(GetResourcesItemQuery query, CancellationToken cancellationToken)
         {
-            var list = db.ResourceItems.AsQueryable();
+            var list = await db.ResourceItems.ToListAsync(cancellationToken);
 
             return await Task.FromResult(new GetResourcesItemResult
             {
-                Resources = list
+                Resources =  list
             });
         }
 

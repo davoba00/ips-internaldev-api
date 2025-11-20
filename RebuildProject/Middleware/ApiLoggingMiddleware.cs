@@ -74,7 +74,7 @@ namespace RebuildProject.Middleware
             await this.mediator.Send(new AddApiLogCommand
             {
                 ApiLog = log,
-                DaysToKeepLogEntry = options.CurrentValue.DaysToKeepLogEntry
+                DaysToKeepLogEntry = this.options.CurrentValue.DaysToKeepLogEntry
             });
         }
 

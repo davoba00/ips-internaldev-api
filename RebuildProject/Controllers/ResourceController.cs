@@ -45,7 +45,7 @@ namespace RebuildProject.Controllers
         [HttpGet("resource/{id}")]
         public async Task<SingleResult<Resource>> Get(Guid id, ODataQueryOptions<Resource> queryOptions)
         {
-            var result = await mediator.Send(new GetResourceQuery
+            var result = await this.mediator.Send(new GetResourceQuery
             {
                 QueryOptions = queryOptions,
                 Id = id
@@ -64,7 +64,7 @@ namespace RebuildProject.Controllers
         [HttpPost("resource")]
         public async Task<IActionResult> Post([FromBody] Resource resource)
         {
-            var result = await mediator.Send(new AddResourceCommand
+            var result = await this.mediator.Send(new AddResourceCommand
             {
                 Resource = resource
             });
@@ -90,7 +90,7 @@ namespace RebuildProject.Controllers
         [HttpDelete("resource/{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var deleteResult = await mediator.Send(new DeleteResourceCommand
+            var deleteResult = await this.mediator.Send(new DeleteResourceCommand
             {
                 Id = id
             });
@@ -111,7 +111,7 @@ namespace RebuildProject.Controllers
         [HttpPatch("resource/{id:guid}")]
         public async Task<IActionResult> Patch(Guid id, [FromBody] Delta<Resource> delta)
         {
-            var resoure = await mediator.Send(new PatchResourceCommand
+            var resoure = await this.mediator.Send(new PatchResourceCommand
             {
                 Id = id,
                 Delta = delta

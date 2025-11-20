@@ -43,12 +43,12 @@ namespace RebuildProject.Service
 
         #region Public Methods
 
-        public async Task<AddResourceResult> AddResource(AddResourceCommand query)
+        public async Task<AddResourceResult> AddResource(AddResourceCommand query, CancellationToken cancellationToken)
         {
             query.Resource.UpdateIpsFields(Enums.OperationType.Create);
 
-            await db.Resources.AddAsync(query.Resource);
-            await db.SaveChangesAsync();
+            await db.Resources.AddAsync(query.Resource, cancellationToken);
+            await db.SaveChangesAsync(cancellationToken);
 
             return new AddResourceResult
             {

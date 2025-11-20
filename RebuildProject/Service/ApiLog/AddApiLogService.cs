@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RebuildProject.Models;
+using System.Threading;
 
 namespace RebuildProject.Service
 {
@@ -45,11 +46,11 @@ namespace RebuildProject.Service
 
         #region Public Methods
 
-        public async Task<AddApiLogResult> AddApiLog(AddApiLogCommand query)
+        public async Task<AddApiLogResult> AddApiLog(AddApiLogCommand query, CancellationToken cancellationToken)
         {
-            await this.db.ApiLogs.AddAsync(query.ApiLog);
+            await this.db.ApiLogs.AddAsync(query.ApiLog, cancellationToken);
 
-            await this.db.SaveChangesAsync();
+            await this.db.SaveChangesAsync(cancellationToken);
 
             await this.CleanupAsync(query.DaysToKeepLogEntry);
 

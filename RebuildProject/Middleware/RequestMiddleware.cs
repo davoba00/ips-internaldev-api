@@ -26,7 +26,7 @@ namespace RebuildProject.Middleware
 
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
-            if (!settings.Enable)
+            if (!this.settings.Enable)
             {
                 await next(context);
                 return;
