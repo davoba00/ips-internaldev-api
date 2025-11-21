@@ -45,7 +45,7 @@ namespace RebuildProject.Service
 
         public async Task<GetResourceCapacityResult> GetResource(GetResourceCapacityQuery query, CancellationToken cancellationToken)
         {
-            var dataSql = db.ResourceCapacities.Where(x => x.ResourceId == query.Id && x.Deleted == null);
+            var dataSql = db.ResourceCapacities.Where(x => x.ResourceCapacityId == query.Id && x.Deleted == null);
 
             return await Task.FromResult(new GetResourceCapacityResult
             {

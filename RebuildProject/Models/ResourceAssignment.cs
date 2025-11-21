@@ -20,5 +20,5 @@ public partial class ResourceAssignment
 
     [IpsField(Enums.FieldNames.DateDeleted)]
     public DateTime? Deleted { get; set; }
-    //public virtual Resource Resource { get; set; }
+    public virtual Resource Resource { get; set; }
 }

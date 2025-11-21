@@ -75,28 +75,6 @@ namespace RebuildProject.Controllers
 
         }
 
-        [HttpDelete("resourceAssignment/{id:guid}")]
-        public async Task<IActionResult> Delete(Guid id)
-        {
-            var deleteResult = await this.mediator.Send(new DeleteResourceAssignmentCommand
-            {
-                Id = id
-            });
-
-            var result = await mediator.Send(new GetResourceAssignmentQuery
-            {
-                Id = id
-            });
-
-            if (deleteResult.IsFailed)
-            {
-                return this.StatusCode(deleteResult);
-            }
-
-            return Ok(deleteResult.ResourceAssignment);
-
-        }
-
         [HttpPatch("resourceAssignment/{id:guid}")]
         public async Task<IActionResult> Patch(Guid id, [FromBody] Delta<ResourceAssignment> delta)
         {
@@ -112,6 +90,23 @@ namespace RebuildProject.Controllers
             }
 
             return Ok(resoure.ResourceAssignment);
+        }
+
+        [HttpDelete("resourceAssignment/{id:guid}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var result = await this.mediator.Send(new DeleteResourceAssignmentCommand
+            {
+                Id = id
+            });
+
+            if (result.IsFailed)
+            {
+                return this.StatusCode(result);
+            }
+
+            return this.NoContent();
+
         }
 
         #endregion

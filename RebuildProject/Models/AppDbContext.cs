@@ -85,10 +85,10 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.Deleted).HasColumnType("datetime");
             entity.Property(e => e.Updated).HasColumnType("datetime");
 
-            //entity.HasOne(d => d.Resource)
-            //    .WithMany(p => p.ResourceAssignment)
-            //    .HasForeignKey(d => d.ResourceId)
-            //    .OnDelete(DeleteBehavior.Cascade);
+            entity.HasOne(d => d.Resource)
+                .WithMany(p => p.ResourceAssignments)
+                .HasForeignKey(d => d.ResourceId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
 
         modelBuilder.Entity<ResourceCapacity>(entity =>
@@ -109,6 +109,11 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.DateTo).HasColumnType("datetime");
             entity.Property(e => e.Deleted).HasColumnType("datetime");
             entity.Property(e => e.Updated).HasColumnType("datetime");
+
+            entity.HasOne(d => d.Resource)
+                .WithMany(p => p.ResourceCapacities)
+                .HasForeignKey(d => d.ResourceId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
 
         OnModelCreatingPartial(modelBuilder);

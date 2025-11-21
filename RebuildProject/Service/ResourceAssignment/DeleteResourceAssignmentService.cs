@@ -58,7 +58,7 @@ namespace RebuildProject.Service
 
             await db.SaveChangesAsync(cancellationToken);
 
-            return new DeleteResourceAssingmentResult { ResourceAssignment = existingSql };
+            return new DeleteResourceAssingmentResult { };
         }
 
         #endregion
