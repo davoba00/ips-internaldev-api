@@ -306,6 +306,74 @@ namespace RebuildProject.Service
     }
     #endregion
 
+    #region GetResourcesCapacityQuery
+
+    public partial class GetResourcesCapacityQuery : IRequest<GetResourcesCapacityResult> { }
+
+    public partial class GetResourcesCapacityResult : Result
+    {
+    }
+
+    public interface IGetResourcesCapacityService
+    {
+        Task<GetResourcesCapacityResult> GetResourcesCapacity(GetResourcesCapacityQuery query, CancellationToken token);
+    }
+
+    public class GetResourcesCapacityHandler : IRequestHandler<GetResourcesCapacityQuery, GetResourcesCapacityResult>
+    {
+        private readonly IGetResourcesCapacityService service;
+
+        public GetResourcesCapacityHandler(IGetResourcesCapacityService service)
+        {
+            this.service = service;
+        }
+
+        #region Public Methods
+
+        public async Task<GetResourcesCapacityResult> Handle(GetResourcesCapacityQuery request, CancellationToken cancellationToken)
+        {
+            return await service.GetResourcesCapacity(request, cancellationToken);
+        }
+
+        #endregion
+    }
+
+    #endregion
+
+    #region GetResourceCapacityQuery
+    public partial class GetResourceCapacityQuery : IRequest<GetResourceCapacityResult> { }
+
+    public partial class GetResourceCapacityResult : Result
+    {
+    }
+
+    public interface IGetResourceCapacityService
+    {
+        Task<GetResourceCapacityResult> GetResource(GetResourceCapacityQuery query, CancellationToken cancellationToken);
+    }
+
+    public class GetResourceCapacityHandler : IRequestHandler<GetResourceCapacityQuery, GetResourceCapacityResult>
+    {
+        private readonly IGetResourceCapacityService service;
+
+        public GetResourceCapacityHandler(IGetResourceCapacityService service)
+        {
+            this.service = service;
+        }
+
+        #region Public Methods
+
+        public async Task<GetResourceCapacityResult> Handle(GetResourceCapacityQuery request, CancellationToken cancellationToken)
+        {
+            var resource = await service.GetResource(request, cancellationToken);
+            return resource;
+        }
+
+        #endregion
+    }
+
+    #endregion
+
     #region AddResourceCommand
 
     public partial class AddResourceCommand : IRequest<AddResourceResult>
@@ -422,7 +490,7 @@ namespace RebuildProject.Service
 
     #endregion
 
-    #region AddResourceCommand
+    #region AddResourceAssignmentCommand
 
     public partial class AddResourceAssignmentCommand : IRequest<AddResourceAssignmentResult>
     {
@@ -453,6 +521,45 @@ namespace RebuildProject.Service
         public async Task<AddResourceAssignmentResult> Handle(AddResourceAssignmentCommand request, CancellationToken cancellationToken)
         {
             var resource = await service.AddResourceAssignment(request, cancellationToken);
+            return resource;
+        }
+
+        #endregion
+
+    }
+    #endregion
+
+    #region AddResourceCapacityCommand
+
+    public partial class AddResourceCapacityCommand : IRequest<AddResourceCapacityResult>
+    {
+    }
+
+    public partial class AddResourceCapacityResult : Result
+    {
+        public bool IsValid { get; set; }
+    }
+    public interface IAddResourceCapacityService
+    {
+        Task<AddResourceCapacityResult> AddResourceCapacity(AddResourceCapacityCommand query, CancellationToken cancellationToken);
+    }
+
+
+    public class AddRequestCapacityHandler : IRequestHandler<AddResourceCapacityCommand, AddResourceCapacityResult>
+    {
+
+        private readonly IAddResourceCapacityService service;
+
+        public AddRequestCapacityHandler(IAddResourceCapacityService service)
+        {
+            this.service = service;
+        }
+
+        #region Public Methods
+
+        public async Task<AddResourceCapacityResult> Handle(AddResourceCapacityCommand request, CancellationToken cancellationToken)
+        {
+            var resource = await service.AddResourceCapacity(request, cancellationToken);
             return resource;
         }
 
@@ -537,7 +644,7 @@ namespace RebuildProject.Service
     }
     #endregion
 
-    #region PatchResourceCommand
+    #region PatchResourceAssignmentCommand
 
     public partial class PatchResourceAssignmentCommand : IRequest<PatchResourceAssignmentResult>
     {
@@ -566,6 +673,44 @@ namespace RebuildProject.Service
         #region Public Methods
 
         public async Task<PatchResourceAssignmentResult> Handle(PatchResourceAssignmentCommand request, CancellationToken cancellationToken)
+        {
+            var resource = await service.PatchResource(request, cancellationToken);
+            return resource;
+        }
+
+        #endregion
+    }
+    #endregion
+
+    #region PatchResourceCommand
+
+    public partial class PatchResourceCapacityCommand : IRequest<PatchResourceCapacityResult>
+    {
+
+    }
+
+    public partial class PatchResourceCapacityResult : Result
+    {
+    }
+    public interface IUpdateResourceCapacityService
+    {
+        Task<PatchResourceCapacityResult> PatchResource(PatchResourceCapacityCommand query, CancellationToken cancellationToken);
+    }
+
+
+    public class PatchRequestCapacityHandler : IRequestHandler<PatchResourceCapacityCommand, PatchResourceCapacityResult>
+    {
+
+        private readonly IUpdateResourceCapacityService service;
+
+        public PatchRequestCapacityHandler(IUpdateResourceCapacityService service)
+        {
+            this.service = service;
+        }
+
+        #region Public Methods
+
+        public async Task<PatchResourceCapacityResult> Handle(PatchResourceCapacityCommand request, CancellationToken cancellationToken)
         {
             var resource = await service.PatchResource(request, cancellationToken);
             return resource;
@@ -652,7 +797,7 @@ namespace RebuildProject.Service
     }
     #endregion
 
-    #region DeleteResourceCommand
+    #region DeleteResourceAssignmentCommand
 
     public partial class DeleteResourceAssignmentCommand : IRequest<DeleteResourceAssingmentResult>
     {
@@ -683,6 +828,45 @@ namespace RebuildProject.Service
         public async Task<DeleteResourceAssingmentResult> Handle(DeleteResourceAssignmentCommand request, CancellationToken cancellationToken)
         {
             var resource = await service.DeleteResource(request, cancellationToken);
+            return resource;
+        }
+
+        #endregion
+    }
+
+    #endregion
+
+    #region DeleteResourceCapacityCommand
+
+    public partial class DeleteResourceCapacityCommand : IRequest<DeleteResourceCapacityResult>
+    {
+    }
+
+    public partial class DeleteResourceCapacityResult : Result
+    {
+    }
+
+    public interface IDeleteResourceCapacityService
+    {
+        Task<DeleteResourceCapacityResult> DeleteResourceCapacity(DeleteResourceCapacityCommand query, CancellationToken cancellationToken);
+    }
+
+
+    public class DeleteRequestCapacityHandler : IRequestHandler<DeleteResourceCapacityCommand, DeleteResourceCapacityResult>
+    {
+
+        private readonly IDeleteResourceCapacityService service;
+
+        public DeleteRequestCapacityHandler(IDeleteResourceCapacityService service)
+        {
+            this.service = service;
+        }
+
+        #region Public Methods
+
+        public async Task<DeleteResourceCapacityResult> Handle(DeleteResourceCapacityCommand request, CancellationToken cancellationToken)
+        {
+            var resource = await service.DeleteResourceCapacity(request, cancellationToken);
             return resource;
         }
 

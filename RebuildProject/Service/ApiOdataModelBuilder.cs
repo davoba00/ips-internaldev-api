@@ -20,6 +20,8 @@ namespace ODataResourceApi.Services.OData
 
             odataBuilder.EntitySet<ResourceAssignment>("resourceAssignment").EntityType.HasKey(ri => ri.ResourceAssignmentId);
 
+            odataBuilder.EntitySet<ResourceCapacity>("resourceCapacity").EntityType.HasKey(ri => ri.ResourceCapacityId);
+
             odataBuilder.Function("getAllResource").ReturnsFromEntitySet<Resource>("resource");
 
             odataBuilder.Function("mostRecent").ReturnsFromEntitySet<Resource>("resource");

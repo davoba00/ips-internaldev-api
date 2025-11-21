@@ -23,6 +23,7 @@ public partial class AppDbContext : DbContext
     public virtual DbSet<ResourceItem> ResourceItems { get; set; }
     public virtual DbSet<ApiLog> ApiLogs { get; set; }
     public virtual DbSet<ResourceAssignment> ResourceAssignments { get; set; }
+    public virtual DbSet<ResourceCapacity> ResourceCapacities { get; set; }
 
     #endregion
 
@@ -88,6 +89,26 @@ public partial class AppDbContext : DbContext
             //    .WithMany(p => p.ResourceAssignment)
             //    .HasForeignKey(d => d.ResourceId)
             //    .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<ResourceCapacity>(entity =>
+        {
+            entity.HasQueryFilter(e => e.Deleted == null);
+
+            entity.ToTable("ResourceCapacity", "dbo");
+
+            entity.HasKey(e => e.ResourceCapacityId);
+
+            entity.Property(e => e.ResourceCapacityId).ValueGeneratedNever();
+
+            entity.HasIndex(e => e.ResourceId);
+
+            entity.Property(e => e.ResourceCapacityId).ValueGeneratedNever();
+            entity.Property(e => e.Created).HasColumnType("datetime");
+            entity.Property(e => e.DateFrom).HasColumnType("datetime");
+            entity.Property(e => e.DateTo).HasColumnType("datetime");
+            entity.Property(e => e.Deleted).HasColumnType("datetime");
+            entity.Property(e => e.Updated).HasColumnType("datetime");
         });
 
         OnModelCreatingPartial(modelBuilder);
