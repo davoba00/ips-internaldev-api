@@ -38,6 +38,40 @@ namespace RebuildProject.Service
 
     #endregion
 
+    #region GetMaxResourceQuery
+
+    public partial class GetMaxResourceQuery : IRequest<GetMaxResourceResult> { }
+
+    public partial class GetMaxResourceResult : Result
+    {
+    }
+
+    public interface IGetMaxResourcesService
+    {
+        Task<GetMaxResourceResult> GetMaxResource(GetMaxResourceQuery query, CancellationToken token);
+    }
+
+    public class GetMaxResourcesHandler : IRequestHandler<GetMaxResourceQuery, GetMaxResourceResult>
+    {
+        private readonly IGetMaxResourcesService service;
+
+        public GetMaxResourcesHandler(IGetMaxResourcesService service)
+        {
+            this.service = service;
+        }
+
+        #region Public Methods
+
+        public async Task<GetMaxResourceResult> Handle(GetMaxResourceQuery request, CancellationToken cancellationToken)
+        {
+            return await service.GetMaxResource(request, cancellationToken);
+        }
+
+        #endregion
+    }
+
+    #endregion
+
     #region GetResourceQuery
     public partial class GetResourceQuery : IRequest<GetResourceResult> { }
 
@@ -64,6 +98,40 @@ namespace RebuildProject.Service
         public async Task<GetResourceResult> Handle(GetResourceQuery request, CancellationToken cancellationToken)
         {
             var resource = await service.GetResource(request, cancellationToken);
+            return resource;
+        }
+
+        #endregion
+    }
+
+    #endregion
+
+    #region GetResourcesQueryAssignment
+    public partial class GetResourcesAssignmentQuery : IRequest<GetResourcesAssignmentResult> { }
+
+    public partial class GetResourcesAssignmentResult : Result
+    {
+    }
+
+    public interface IGetResourcesAssignmentService
+    {
+        Task<GetResourcesAssignmentResult> GetResourceAssignment(GetResourcesAssignmentQuery query, CancellationToken cancellationToken);
+    }
+
+    public class GetResourcesAssignmentHandler : IRequestHandler<GetResourcesAssignmentQuery, GetResourcesAssignmentResult>
+    {
+        private readonly IGetResourcesAssignmentService service;
+
+        public GetResourcesAssignmentHandler(IGetResourcesAssignmentService service)
+        {
+            this.service = service;
+        }
+
+        #region Public Methods
+
+        public async Task<GetResourcesAssignmentResult> Handle(GetResourcesAssignmentQuery request, CancellationToken cancellationToken)
+        {
+            var resource = await service.GetResourceAssignment(request, cancellationToken);
             return resource;
         }
 
@@ -136,6 +204,40 @@ namespace RebuildProject.Service
 
         #endregion
     }
+    #endregion
+
+    #region GetResourceAssignmentQuery
+    public partial class GetResourceAssignmentQuery : IRequest<GetResourceAssignmenResult> { }
+
+    public partial class GetResourceAssignmenResult : Result
+    {
+    }
+
+    public interface IGetResourceAssignmentService
+    {
+        Task<GetResourceAssignmenResult> GetResourceAssignment(GetResourceAssignmentQuery query, CancellationToken cancellationToken);
+    }
+
+    public class GetResourceAssignmentHandler : IRequestHandler<GetResourceAssignmentQuery, GetResourceAssignmenResult>
+    {
+        private readonly IGetResourceAssignmentService service;
+
+        public GetResourceAssignmentHandler(IGetResourceAssignmentService service)
+        {
+            this.service = service;
+        }
+
+        #region Public Methods
+
+        public async Task<GetResourceAssignmenResult> Handle(GetResourceAssignmentQuery request, CancellationToken cancellationToken)
+        {
+            var resource = await service.GetResourceAssignment(request, cancellationToken);
+            return resource;
+        }
+
+        #endregion
+    }
+
     #endregion
 
     #region GetApiLogsQuery
@@ -320,6 +422,45 @@ namespace RebuildProject.Service
 
     #endregion
 
+    #region AddResourceCommand
+
+    public partial class AddResourceAssignmentCommand : IRequest<AddResourceAssignmentResult>
+    {
+    }
+
+    public partial class AddResourceAssignmentResult : Result
+    {
+        public bool IsValid { get; set; }
+    }
+    public interface IAddResourceAssignmentService
+    {
+        Task<AddResourceAssignmentResult> AddResourceAssignment(AddResourceAssignmentCommand query, CancellationToken cancellationToken);
+    }
+
+
+    public class AddResourceAssignmentHandler : IRequestHandler<AddResourceAssignmentCommand, AddResourceAssignmentResult>
+    {
+
+        private readonly IAddResourceAssignmentService service;
+
+        public AddResourceAssignmentHandler(IAddResourceAssignmentService service)
+        {
+            this.service = service;
+        }
+
+        #region Public Methods
+
+        public async Task<AddResourceAssignmentResult> Handle(AddResourceAssignmentCommand request, CancellationToken cancellationToken)
+        {
+            var resource = await service.AddResourceAssignment(request, cancellationToken);
+            return resource;
+        }
+
+        #endregion
+
+    }
+    #endregion
+
     #region PatchResourceItemCommand
 
     public partial class PatchResourceItemCommand : IRequest<PatchResourceItemResult>
@@ -387,6 +528,44 @@ namespace RebuildProject.Service
         #region Public Methods
 
         public async Task<PatchResourceResult> Handle(PatchResourceCommand request, CancellationToken cancellationToken)
+        {
+            var resource = await service.PatchResource(request, cancellationToken);
+            return resource;
+        }
+
+        #endregion
+    }
+    #endregion
+
+    #region PatchResourceCommand
+
+    public partial class PatchResourceAssignmentCommand : IRequest<PatchResourceAssignmentResult>
+    {
+
+    }
+
+    public partial class PatchResourceAssignmentResult : Result
+    {
+    }
+    public interface IUpdateResourceAssingmentService
+    {
+        Task<PatchResourceAssignmentResult> PatchResource(PatchResourceAssignmentCommand query, CancellationToken cancellationToken);
+    }
+
+
+    public class PatchRequestAssignmentHandler : IRequestHandler<PatchResourceAssignmentCommand, PatchResourceAssignmentResult>
+    {
+
+        private readonly IUpdateResourceAssingmentService service;
+
+        public PatchRequestAssignmentHandler(IUpdateResourceAssingmentService service)
+        {
+            this.service = service;
+        }
+
+        #region Public Methods
+
+        public async Task<PatchResourceAssignmentResult> Handle(PatchResourceAssignmentCommand request, CancellationToken cancellationToken)
         {
             var resource = await service.PatchResource(request, cancellationToken);
             return resource;
@@ -471,5 +650,44 @@ namespace RebuildProject.Service
 
         #endregion
     }
+    #endregion
+
+    #region DeleteResourceCommand
+
+    public partial class DeleteResourceAssignmentCommand : IRequest<DeleteResourceAssingmentResult>
+    {
+    }
+
+    public partial class DeleteResourceAssingmentResult : Result
+    {
+    }
+
+    public interface IDeleteResourceAssignmentService
+    {
+        Task<DeleteResourceAssingmentResult> DeleteResource(DeleteResourceAssignmentCommand query, CancellationToken cancellationToken);
+    }
+
+
+    public class DeleteRequestAssignmentHandler : IRequestHandler<DeleteResourceAssignmentCommand, DeleteResourceAssingmentResult>
+    {
+
+        private readonly IDeleteResourceAssignmentService service;
+
+        public DeleteRequestAssignmentHandler(IDeleteResourceAssignmentService service)
+        {
+            this.service = service;
+        }
+
+        #region Public Methods
+
+        public async Task<DeleteResourceAssingmentResult> Handle(DeleteResourceAssignmentCommand request, CancellationToken cancellationToken)
+        {
+            var resource = await service.DeleteResource(request, cancellationToken);
+            return resource;
+        }
+
+        #endregion
+    }
+
     #endregion
 }

@@ -45,10 +45,7 @@ namespace RebuildProject.Service
         {
             var list = await db.ResourceItems.ToListAsync(cancellationToken);
 
-            return await Task.FromResult(new GetResourcesItemResult
-            {
-                Resources =  list
-            });
+            return await Task.FromResult(new GetResourcesItemResult { Resources =  list });
         }
 
         #endregion

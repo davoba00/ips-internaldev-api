@@ -26,4 +26,5 @@ public partial class Resource
     public string? MachineNameUpdated { get; set; }
 
     public virtual ICollection<ResourceItem> ResourceItems { get; set; } = new List<ResourceItem>();
+    //public virtual ICollection<ResourceAssignment> ResourceAssignment { get; set; } = new List<ResourceAssignment>();
 }

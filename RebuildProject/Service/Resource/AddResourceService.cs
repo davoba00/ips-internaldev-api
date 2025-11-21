@@ -48,6 +48,7 @@ namespace RebuildProject.Service
             query.Resource.UpdateIpsFields(Enums.OperationType.Create);
 
             await db.Resources.AddAsync(query.Resource, cancellationToken);
+
             await db.SaveChangesAsync(cancellationToken);
 
             return new AddResourceResult

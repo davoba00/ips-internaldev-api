@@ -84,6 +84,7 @@ namespace RebuildProject
                    options.AddRouteComponents(ApiRoutes.Default, ApiODataModelBuilder.GetEdmModel());
                    options.EnableQueryFeatures(100);
                    options.EnableContinueOnErrorHeader = true;
+                   options.RouteOptions.EnableNonParenthesisForEmptyParameterFunction = true;
                }
            );
 

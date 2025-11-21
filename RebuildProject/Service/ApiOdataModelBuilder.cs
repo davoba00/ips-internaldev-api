@@ -12,15 +12,19 @@ namespace ODataResourceApi.Services.OData
         {
             var odataBuilder = new ODataConventionModelBuilder();
 
-            var resource = odataBuilder.EntitySet<Resource>("resource")
-                .EntityType.HasKey(r => r.ResourceId);
+            odataBuilder.EntitySet<Resource>("resource").EntityType.HasKey(r => r.ResourceId);
 
-            var resourceItem = odataBuilder.EntitySet<ResourceItem>("resourceitem")
-                .EntityType.HasKey(ri => ri.ResourceItemId);
+            odataBuilder.EntitySet<ResourceItem>("resourceitem").EntityType.HasKey(ri => ri.ResourceItemId);
 
-            var apiLog = odataBuilder.EntitySet<ApiLog>("apilog")
-                .EntityType.HasKey(ri => ri.LogId);
+            odataBuilder.EntitySet<ApiLog>("apilog").EntityType.HasKey(ri => ri.LogId);
 
+            odataBuilder.EntitySet<ResourceAssignment>("resourceAssignment").EntityType.HasKey(ri => ri.ResourceAssignmentId);
+
+            odataBuilder.Function("getAllResource").ReturnsFromEntitySet<Resource>("resource");
+
+            odataBuilder.Function("mostRecent").ReturnsFromEntitySet<Resource>("resource");
+
+            odataBuilder.Action("incrementResource").ReturnsFromEntitySet<Resource>("resource");
 
             return odataBuilder.GetEdmModel();
         }
