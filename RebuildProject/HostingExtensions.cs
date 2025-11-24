@@ -1,9 +1,12 @@
-﻿using MediatR.Pipeline;
+﻿using MediatR;
+using MediatR.Pipeline;
 using Microsoft.AspNetCore.OData;
 using Microsoft.EntityFrameworkCore;
 using NLog.Web;
 using ODataResourceApi.Services.OData;
+using RebuildProject.EF;
 using RebuildProject.MediatR;
+using RebuildProject.Middleware;
 using RebuildProject.Models;
 using RebuildProject.Service;
 using static RebuildProject.Common.Constants;
@@ -12,11 +15,10 @@ namespace RebuildProject
 {
     public static class HostingExtensions
     {
+        #region Public Methods
+
         public static WebApplicationBuilder ConfigureServices(this WebApplicationBuilder builder)
         {
-            // TODO
-            // Add services to the container.
-
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
@@ -32,11 +34,21 @@ namespace RebuildProject
                  .AddODataRoutes()
                  .AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
+            builder.Services.AddHttpContextAccessor();
+
+            builder.Services.AddTransient(typeof(IPipelineBehavior<,>),
+                                          typeof(RequestCancellationBehavior<,>));
+
+            builder.Services.Configure<DbLoggingSettings>(builder.Configuration.GetSection("DbLogging"));
+
             builder.Services.Scan(scan => scan
                .FromAssemblies(AppDomain.CurrentDomain.GetAssemblies())
                 .AddClasses(classes => classes.Where(c => c.Name.EndsWith("Service")))
                 .AsSelfWithInterfaces()
                 .WithScopedLifetime());
+
+            builder.Services.AddTransient<RequestMiddleware>();
+            builder.Services.AddTransient<ApiLoggingMiddleware>();
 
             return builder;
         }
@@ -52,12 +64,16 @@ namespace RebuildProject
             }
 
             app.UseHttpsRedirection();
+            app.UseRequestMiddleware();
+            app.UseApiLogging();
             app.UseAuthorization();
 
             app.MapControllers();
 
             return app;
         }
+
+        #endregion
 
         #region Internal Methods
 
@@ -69,6 +85,7 @@ namespace RebuildProject
                    options.AddRouteComponents(ApiRoutes.Default, ApiODataModelBuilder.GetEdmModel());
                    options.EnableQueryFeatures(100);
                    options.EnableContinueOnErrorHeader = true;
+                   options.RouteOptions.EnableNonParenthesisForEmptyParameterFunction = true;
                }
            );
 

@@ -1,13 +1,10 @@
-﻿using FluentResults;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Deltas;
 using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Results;
-using Microsoft.AspNetCore.OData.Routing.Controllers;
 using RebuildProject.Models;
 using RebuildProject.Service;
-using System.Net;
 using static RebuildProject.Common.Constants;
 
 namespace RebuildProject.Controllers
@@ -16,25 +13,20 @@ namespace RebuildProject.Controllers
     [ApiController]
     public class ResourceController : BaseODataController
     {
-        #region Private Fields
-
-        private readonly IMediator mediator;
-
-        #endregion
-
         #region Constructors
 
         public ResourceController(IMediator mediator) : base(mediator)
         {
-            this.mediator = mediator;
+
         }
 
         #endregion
 
         #region Public Methods
+
         [EnableQuery]
         [HttpGet("resource")]
-        public async Task<IQueryable<Resource>> Get(ODataQueryOptions<Resource> queryOptions)
+        public async Task<IActionResult> Get(ODataQueryOptions<Resource> queryOptions)
         {
             var result = await mediator.Send(new GetResourcesQuery
             {
@@ -43,17 +35,17 @@ namespace RebuildProject.Controllers
 
             if (result.IsFailed || result.Resources == null)
             {
-                return Enumerable.Empty<Resource>().AsQueryable();
+                return this.StatusCode(result);
             }
 
-            return result.Resources;
+            return Ok(result.Resources);
         }
 
         [EnableQuery]
         [HttpGet("resource/{id}")]
         public async Task<SingleResult<Resource>> Get(Guid id, ODataQueryOptions<Resource> queryOptions)
         {
-            var result = await mediator.Send(new GetResourceQuery
+            var result = await this.mediator.Send(new GetResourceQuery
             {
                 QueryOptions = queryOptions,
                 Id = id
@@ -62,6 +54,7 @@ namespace RebuildProject.Controllers
             if (result.IsFailed || result.Resource == null)
             {
                 var empty = Enumerable.Empty<Resource>().AsQueryable();
+
                 return SingleResult.Create(empty);
             }
 
@@ -71,7 +64,7 @@ namespace RebuildProject.Controllers
         [HttpPost("resource")]
         public async Task<IActionResult> Post([FromBody] Resource resource)
         {
-            var result = await mediator.Send(new AddResourceCommand
+            var result = await this.mediator.Send(new AddResourceCommand
             {
                 Resource = resource
             });
@@ -79,11 +72,13 @@ namespace RebuildProject.Controllers
             if (result.IsFailed)
             {
                 #region OldCode
+
                 //var vv = result.Errors.FirstOrDefault()?.Metadata?.GetValueOrDefault("Status");
 
                 //var statusCode = vv != null ? (int)vv : (int)HttpStatusCode.InternalServerError;
 
-                //return this.StatusCode(statusCode, result.Errors); 
+                //return this.StatusCode(statusCode, result.Errors);
+
                 #endregion
 
                 return this.StatusCode(result);
@@ -95,7 +90,7 @@ namespace RebuildProject.Controllers
         [HttpDelete("resource/{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            await mediator.Send(new DeleteResourceCommand
+            var deleteResult = await this.mediator.Send(new DeleteResourceCommand
             {
                 Id = id
             });
@@ -105,18 +100,18 @@ namespace RebuildProject.Controllers
                 Id = id
             });
 
-            if (result.IsFailed)
+            if (deleteResult.IsFailed)
             {
-                return this.StatusCode(result);
+                return this.StatusCode(deleteResult);
             }
 
-            return NoContent();
+            return Ok(result);
         }
 
         [HttpPatch("resource/{id:guid}")]
         public async Task<IActionResult> Patch(Guid id, [FromBody] Delta<Resource> delta)
         {
-            var resoure = await mediator.Send(new PatchResourceCommand
+            var resoure = await this.mediator.Send(new PatchResourceCommand
             {
                 Id = id,
                 Delta = delta
@@ -131,6 +126,5 @@ namespace RebuildProject.Controllers
         }
 
         #endregion
-
     }
 }

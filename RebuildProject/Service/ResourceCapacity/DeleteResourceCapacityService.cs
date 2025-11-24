@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿
+using Microsoft.EntityFrameworkCore;
 using RebuildProject.Common;
 using RebuildProject.EF;
 
@@ -6,7 +7,7 @@ namespace RebuildProject.Service
 {
     #region Query
 
-    public partial class DeleteResourceCommand
+    public partial class DeleteResourceCapacityCommand
     {
         public Guid Id { get; set; }
     }
@@ -15,13 +16,14 @@ namespace RebuildProject.Service
 
     #region Result
 
-    public partial class DeleteResourceResult
+    public partial class DeleteResourceCapacityResult
     {
 
     }
 
     #endregion
-    public class DeleteResourceService : IDeleteResourceService
+
+    public class DeleteResourceCapacityService : IDeleteResourceCapacityService
     {
         #region Fields
 
@@ -31,7 +33,7 @@ namespace RebuildProject.Service
 
         #region Contructor
 
-        public DeleteResourceService(AppDbContext db)
+        public DeleteResourceCapacityService(AppDbContext db)
         {
             this.db = db;
         }
@@ -40,13 +42,13 @@ namespace RebuildProject.Service
 
         #region Public Methods
 
-        public async Task<DeleteResourceResult> DeleteResource(DeleteResourceCommand query, CancellationToken cancellationToken)
+        public async Task<DeleteResourceCapacityResult> DeleteResourceCapacity(DeleteResourceCapacityCommand query, CancellationToken cancellationToken)
         {
-            var existingSql = await db.Resources.FirstOrDefaultAsync(cus => cus.ResourceId == query.Id, cancellationToken);
+            var existingSql = await db.ResourceCapacities.FirstOrDefaultAsync(cus => cus.ResourceCapacityId == query.Id, cancellationToken);
 
             if (existingSql == null)
             {
-                var result = new DeleteResourceResult();
+                var result = new DeleteResourceCapacityResult();
 
                 result.WithError("Resource not found");
 
@@ -57,10 +59,9 @@ namespace RebuildProject.Service
 
             await db.SaveChangesAsync(cancellationToken);
 
-            return new DeleteResourceResult { };
+            return new DeleteResourceCapacityResult { };
         }
 
         #endregion
-
     }
 }

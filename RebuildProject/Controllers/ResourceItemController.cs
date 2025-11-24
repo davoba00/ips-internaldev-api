@@ -1,10 +1,8 @@
-﻿using FluentResults;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Deltas;
 using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Results;
-using Microsoft.AspNetCore.OData.Routing.Controllers;
 using RebuildProject.Models;
 using RebuildProject.Service;
 using static RebuildProject.Common.Constants;
@@ -25,9 +23,10 @@ namespace RebuildProject.Controllers
         #endregion
 
         #region Public Methods
+
         [EnableQuery]
         [HttpGet("resourceitem")]
-        public async Task<IQueryable<ResourceItem>> Get(ODataQueryOptions<ResourceItem> queryOptions)
+        public async Task<List<ResourceItem>> Get(ODataQueryOptions<ResourceItem> queryOptions)
         {
             var result = await this.mediator.Send(new GetResourcesItemQuery
             {
@@ -38,10 +37,10 @@ namespace RebuildProject.Controllers
         }
 
         [EnableQuery]
-        [HttpGet("resourceitem/{id}")]
+        [HttpGet("resourceitem/{id:guid}")]
         public async Task<SingleResult<ResourceItem>> Get(Guid id, ODataQueryOptions<ResourceItem> queryOptions)
         {
-            var result = await mediator.Send(new GetResourceItemQuery
+            var result = await this.mediator.Send(new GetResourceItemQuery
             {
                 QueryOptions = queryOptions,
                 Id = id
@@ -53,7 +52,7 @@ namespace RebuildProject.Controllers
         [HttpPost("resourceItem")]
         public async Task<IActionResult> Post([FromBody] ResourceItem resource)
         {
-            var added = await mediator.Send(new AddResourceItemCommand
+            var added = await this.mediator.Send(new AddResourceItemCommand
             {
                 ResourceItem = resource
             });
@@ -63,26 +62,25 @@ namespace RebuildProject.Controllers
                 return this.StatusCode(added);
             }
 
-
             return Ok(added.Resource);
         }
 
         [HttpDelete("resourceItem/{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            await mediator.Send(new DeleteResourceItemCommand
+            var deleteResult = await this.mediator.Send(new DeleteResourceItemCommand
             {
                 Id = id
             });
 
-            var result = await mediator.Send(new GetResourceItemQuery
+            var result = await this.mediator.Send(new GetResourceItemQuery
             {
                 Id = id
             });
 
-            if (result.IsFailed)
+            if (deleteResult.IsFailed)
             {
-                return this.StatusCode(result);
+                return this.StatusCode(deleteResult);
             }
 
             return NoContent();
@@ -91,7 +89,7 @@ namespace RebuildProject.Controllers
         [HttpPatch("resourceItem/{id:guid}")]
         public async Task<IActionResult> Patch(Guid id, [FromBody] Delta<ResourceItem> delta)
         {
-            var resoure = await mediator.Send(new PatchResourceItemCommand
+            var resoure = await this.mediator.Send(new PatchResourceItemCommand
             {
                 Id = id,
                 Delta = delta
@@ -104,6 +102,7 @@ namespace RebuildProject.Controllers
 
             return Ok(resoure.Resources);
         }
+
         #endregion
     }
 }

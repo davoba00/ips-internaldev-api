@@ -1,17 +1,17 @@
-﻿using Microsoft.AspNetCore.OData.Deltas;
+﻿
+using Microsoft.AspNetCore.OData.Deltas;
 using Microsoft.EntityFrameworkCore;
 using RebuildProject.Common;
 using RebuildProject.EF;
 using RebuildProject.Models;
-using System.Resources;
 
 namespace RebuildProject.Service
 {
     #region Query
 
-    public partial class PatchResourceCommand
+    public partial class PatchResourceAssignmentCommand
     {
-        public Delta<Resource> Delta { get; set; } = default!;
+        public Delta<ResourceAssignment> Delta { get; set; } = default!;
         public Guid Id { get; set; }
     }
 
@@ -19,14 +19,13 @@ namespace RebuildProject.Service
 
     #region Result
 
-    public partial class PatchResourceResult
+    public partial class PatchResourceAssignmentResult
     {
-        public Resource Resources { get; set; }
+        public ResourceAssignment ResourceAssignment { get; set; }
     }
 
     #endregion
-
-    public class UpdateResourceService : IUpdateResourceService
+    public class UpdateResourceAssignmentService : IUpdateResourceAssingmentService
     {
         #region Fields
 
@@ -36,7 +35,7 @@ namespace RebuildProject.Service
 
         #region Contructor
 
-        public UpdateResourceService(AppDbContext db)
+        public UpdateResourceAssignmentService(AppDbContext db)
         {
             this.db = db;
         }
@@ -45,13 +44,13 @@ namespace RebuildProject.Service
 
         #region Public Methods
 
-        public async Task<PatchResourceResult> PatchResource(PatchResourceCommand query, CancellationToken cancellationToken)
+        public async Task<PatchResourceAssignmentResult> PatchResource(PatchResourceAssignmentCommand query, CancellationToken cancellationToken)
         {
-            var resource = await db.Resources.FirstOrDefaultAsync(r => r.ResourceId == query.Id);
+            var resource = await db.ResourceAssignments.FirstOrDefaultAsync(r => r.ResourceAssignmentId == query.Id);
 
             if (resource == null)
             {
-                var result = new PatchResourceResult();
+                var result = new PatchResourceAssignmentResult();
 
                 result.WithError("Resource not found");
 
@@ -65,9 +64,9 @@ namespace RebuildProject.Service
 
             await db.SaveChangesAsync(cancellationToken);
 
-            return new PatchResourceResult
+            return new PatchResourceAssignmentResult
             {
-                Resources = resource
+                ResourceAssignment = resource
             };
         }
 

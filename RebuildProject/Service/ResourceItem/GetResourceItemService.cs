@@ -1,38 +1,48 @@
 ﻿using Microsoft.AspNetCore.OData.Query;
+using RebuildProject.EF;
 using RebuildProject.Models;
-using System.Collections.Generic;
 
 namespace RebuildProject.Service
 {
     #region Query
+
     public partial class GetResourceItemQuery
     {
-        #region Fields
         public ODataQueryOptions<ResourceItem> QueryOptions { get; set; }
         public Guid Id { get; set; }
-        #endregion
     }
+
     #endregion
 
     #region Result
+
     public partial class GetResourceItemResult
     {
-        #region Fields
         public IQueryable<ResourceItem> Resource { get; set; }
-        #endregion
-
     }
 
     #endregion
+
     public class GetResourceItemService : IGetResourceItemService
     {
+        #region Fields
+
         private readonly AppDbContext db;
+
+        #endregion
+
+        #region Constructor
+
         public GetResourceItemService(AppDbContext db)
         {
             this.db = db;
         }
 
-        public async Task<GetResourceItemResult> GetResource(GetResourceItemQuery query)
+        #endregion
+
+        #region Public Methods
+
+        public async Task<GetResourceItemResult> GetResource(GetResourceItemQuery query, CancellationToken cancellationToken)
         {
             var dataSql = db.ResourceItems.Where(x => x.ResourceItemId == query.Id && x.Deleted == null);
 
@@ -41,6 +51,8 @@ namespace RebuildProject.Service
                 Resource = dataSql
             });
         }
+
+        #endregion
 
     }
 }

@@ -6,23 +6,43 @@ namespace ODataResourceApi.Services.OData
 {
     public static class ApiODataModelBuilder
     {
+        #region Public Methods
+
         public static IEdmModel GetEdmModel()
         {
             var odataBuilder = new ODataConventionModelBuilder();
 
-            var resource = odataBuilder.EntitySet<Resource>("resource")
-                .EntityType.HasKey(r => r.ResourceId);
+            #region EntitySet
 
-            var resourceItem = odataBuilder.EntitySet<ResourceItem>("resourceitem")
-                .EntityType.HasKey(ri => ri.ResourceItemId);
+            odataBuilder.EntitySet<Resource>("resource").EntityType.HasKey(r => r.ResourceId);
 
-            var apiLog = odataBuilder.EntitySet<ApiLog>("apilog")
-                .EntityType.HasKey(ri => ri.LogId);
+            odataBuilder.EntitySet<ResourceItem>("resourceitem").EntityType.HasKey(ri => ri.ResourceItemId);
 
+            odataBuilder.EntitySet<ApiLog>("apilog").EntityType.HasKey(ri => ri.LogId);
+
+            odataBuilder.EntitySet<ResourceAssignment>("resourceAssignment").EntityType.HasKey(ri => ri.ResourceAssignmentId);
+
+            odataBuilder.EntitySet<ResourceCapacity>("resourceCapacity").EntityType.HasKey(ri => ri.ResourceCapacityId);
+
+            #endregion
+
+            #region Unbound Function or Action
+
+            odataBuilder.Function("getAllResource").ReturnsFromEntitySet<Resource>("resource");
+
+            odataBuilder.Function("mostRecent").ReturnsFromEntitySet<Resource>("resource");
+
+            odataBuilder.Action("incrementResource").ReturnsFromEntitySet<Resource>("resource");
+
+            odataBuilder.Function("GetCapacityPreview").Returns<ResourceCapacity>();
+
+            var action = odataBuilder.Action("recalculateResourceCapacity").ReturnsFromEntitySet<ResourceCapacity>("resourceCapacity");
+
+            #endregion
 
             return odataBuilder.GetEdmModel();
         }
 
-
+        #endregion
     }
 }
