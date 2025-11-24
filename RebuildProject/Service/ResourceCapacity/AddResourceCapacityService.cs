@@ -22,6 +22,7 @@ namespace RebuildProject.Service
     }
 
     #endregion
+
     public class AddResourceCapacityService : IAddResourceCapacityService
     {
         #region Fields

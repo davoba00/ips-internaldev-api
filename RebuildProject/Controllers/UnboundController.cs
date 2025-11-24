@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Formatter;
 using RebuildProject.Models;
 using RebuildProject.Service;
 using static RebuildProject.Common.Constants;
@@ -61,6 +62,40 @@ namespace RebuildProject.Controllers
             }
 
             return Ok(result.Resource);
+        }
+
+        [HttpGet("GetCapacityPreview")]
+        public async Task<IActionResult> GetCapacityPreview(Guid resourceId, DateTime? dateFrom, DateTime? dateTo)
+        {
+            var result = await this.mediator.Send(new GetCapacityPreviewQuery 
+            {
+                Id = resourceId,
+                DateFrom = dateFrom,
+                DateTo = dateTo
+            });
+
+            if (result.IsFailed)
+            {
+                return this.StatusCode(result);
+            }
+
+            return Ok(result.Preview);
+        }
+
+        [HttpPost("recalculateResourceCapacity")]
+        public async Task<IActionResult> RecalculateResourceCapacity(Guid ResourceCapacityId)
+        {
+            var result = await this.mediator.Send(new AddRecalculateResourceCapacityCommand
+            {
+                ResourceCapacityId = ResourceCapacityId
+            });
+
+            if (result.IsFailed)
+            {
+                return this.StatusCode(result);
+            }
+
+            return Ok(result.ResourceCapacity);
         }
 
         #endregion

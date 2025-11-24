@@ -34,6 +34,10 @@ namespace ODataResourceApi.Services.OData
 
             odataBuilder.Action("incrementResource").ReturnsFromEntitySet<Resource>("resource");
 
+            odataBuilder.Function("GetCapacityPreview").Returns<ResourceCapacity>();
+
+            var action = odataBuilder.Action("recalculateResourceCapacity").ReturnsFromEntitySet<ResourceCapacity>("resourceCapacity");
+
             #endregion
 
             return odataBuilder.GetEdmModel();

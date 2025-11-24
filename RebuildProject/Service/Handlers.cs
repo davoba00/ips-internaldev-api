@@ -72,6 +72,40 @@ namespace RebuildProject.Service
 
     #endregion
 
+    #region GetCapacityPreviewQuery
+
+    public partial class GetCapacityPreviewQuery : IRequest<GetCapacityPreviewResult> { }
+
+    public partial class GetCapacityPreviewResult : Result
+    {
+    }
+
+    public interface IGetCapacityPreviewService
+    {
+        Task<GetCapacityPreviewResult> GetCapacityPreview(GetCapacityPreviewQuery query, CancellationToken token);
+    }
+
+    public class GetCapacityPreviewHandler : IRequestHandler<GetCapacityPreviewQuery, GetCapacityPreviewResult>
+    {
+        private readonly IGetCapacityPreviewService service;
+
+        public GetCapacityPreviewHandler(IGetCapacityPreviewService service)
+        {
+            this.service = service;
+        }
+
+        #region Public Methods
+
+        public async Task<GetCapacityPreviewResult> Handle(GetCapacityPreviewQuery request, CancellationToken cancellationToken)
+        {
+            return await service.GetCapacityPreview(request, cancellationToken);
+        }
+
+        #endregion
+    }
+
+    #endregion
+
     #region GetResourceQuery
     public partial class GetResourceQuery : IRequest<GetResourceResult> { }
 
@@ -521,6 +555,45 @@ namespace RebuildProject.Service
         public async Task<AddResourceAssignmentResult> Handle(AddResourceAssignmentCommand request, CancellationToken cancellationToken)
         {
             var resource = await service.AddResourceAssignment(request, cancellationToken);
+            return resource;
+        }
+
+        #endregion
+
+    }
+    #endregion
+
+    #region AddResourceAssignmentCommand
+
+    public partial class AddRecalculateResourceCapacityCommand : IRequest<AddRecalculateResourceCapacityResult>
+    {
+    }
+
+    public partial class AddRecalculateResourceCapacityResult : Result
+    {
+        public bool IsValid { get; set; }
+    }
+    public interface IAddRecalculateResourceCapacityService
+    {
+        Task<AddRecalculateResourceCapacityResult> RecalculateResourceCapacityCapacity(AddRecalculateResourceCapacityCommand query, CancellationToken cancellationToken);
+    }
+
+
+    public class AddRecalculateResourceCapacityHandler : IRequestHandler<AddRecalculateResourceCapacityCommand, AddRecalculateResourceCapacityResult>
+    {
+
+        private readonly IAddRecalculateResourceCapacityService service;
+
+        public AddRecalculateResourceCapacityHandler(IAddRecalculateResourceCapacityService service)
+        {
+            this.service = service;
+        }
+
+        #region Public Methods
+
+        public async Task<AddRecalculateResourceCapacityResult> Handle(AddRecalculateResourceCapacityCommand request, CancellationToken cancellationToken)
+        {
+            var resource = await service.RecalculateResourceCapacityCapacity(request, cancellationToken);
             return resource;
         }
 
