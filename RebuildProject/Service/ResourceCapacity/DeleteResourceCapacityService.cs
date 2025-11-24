@@ -1,7 +1,7 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
 using RebuildProject.Common;
-using RebuildProject.Models;
+using RebuildProject.EF;
 
 namespace RebuildProject.Service
 {

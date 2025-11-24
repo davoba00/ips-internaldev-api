@@ -1,5 +1,6 @@
 ﻿
 using RebuildProject.Common;
+using RebuildProject.EF;
 using RebuildProject.Models;
 
 namespace RebuildProject.Service

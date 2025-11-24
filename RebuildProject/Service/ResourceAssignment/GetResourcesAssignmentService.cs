@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.AspNetCore.OData.Query;
+using RebuildProject.EF;
 using RebuildProject.Models;
 
 namespace RebuildProject.Service

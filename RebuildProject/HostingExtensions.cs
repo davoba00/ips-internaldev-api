@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.OData;
 using Microsoft.EntityFrameworkCore;
 using NLog.Web;
 using ODataResourceApi.Services.OData;
+using RebuildProject.EF;
 using RebuildProject.MediatR;
 using RebuildProject.Middleware;
 using RebuildProject.Models;

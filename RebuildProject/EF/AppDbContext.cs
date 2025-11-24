@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using RebuildProject.Models;
 
-namespace RebuildProject.Models;
+namespace RebuildProject.EF;
 
 public partial class AppDbContext : DbContext
 {

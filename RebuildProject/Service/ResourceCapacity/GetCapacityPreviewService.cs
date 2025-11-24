@@ -1,6 +1,7 @@
 ﻿
 using FluentResults;
 using MediatR;
+using RebuildProject.EF;
 using RebuildProject.Models;
 
 namespace RebuildProject.Service
