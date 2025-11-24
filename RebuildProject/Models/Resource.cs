@@ -12,9 +12,9 @@ public partial class Resource
     }
     public Guid ResourceId { get; set; }
 
-    public string? Name { get; set; }
+    public string Name { get; set; }
 
-    public string? Description { get; set; }
+    public string Description { get; set; }
 
     [IpsField(Enums.FieldNames.DateCreated)]
     public DateTime? Created { get; set; }
@@ -26,10 +26,10 @@ public partial class Resource
     public DateTime? Deleted { get; set; }
 
     [IpsField(Enums.FieldNames.MachineNameCreated)]
-    public string? MachineNameCreated { get; set; }
+    public string MachineNameCreated { get; set; }
 
     [IpsField(Enums.FieldNames.MachineNameUpdated)]
-    public string? MachineNameUpdated { get; set; }
+    public string MachineNameUpdated { get; set; }
 
     public virtual ICollection<ResourceItem> ResourceItems { get; set; }
     public virtual ICollection<ResourceAssignment> ResourceAssignments { get; set; }

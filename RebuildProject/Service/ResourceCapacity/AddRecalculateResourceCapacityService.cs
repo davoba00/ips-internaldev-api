@@ -48,27 +48,26 @@ namespace RebuildProject.Service
             var id = query.ResourceCapacityId;
 
             var capacity = await db.ResourceCapacities
-                            .Where(x => x.ResourceCapacityId == id && x.Deleted == null && x.Resource.Deleted == null)
                             .Include(x => x.Resource)
-                            .ThenInclude(r => r.ResourceAssignments.Where(a => a.DateFrom != null && a.DateTo != null && a.Deleted == null))
-                            .FirstOrDefaultAsync(cancellationToken);
+                            .ThenInclude(x => x.ResourceAssignments)
+                            .FirstOrDefaultAsync(x => x.ResourceCapacityId == id && x.DateFrom != null && x.DateTo != null);
 
-            if (capacity == null || capacity?.Resource?.ResourceAssignments == null)
+            var assignments = capacity?.Resource?.ResourceAssignments;
+
+            if (capacity == null || assignments == null)
             {
                 return new AddRecalculateResourceCapacityResult();
             }
 
-            var assignments = capacity.Resource.ResourceAssignments;
-
             var minDateFrom = assignments.Min(x => x.DateFrom);
             var maxDateTo = assignments.Max(x => x.DateTo);
 
-            int totalDays = assignments.Sum(a => WorkingDays(a.DateFrom.Value, a.DateTo.Value));
+            var workingDays = this.CalculateWorkingDays(assignments);
 
-            int totalHours = totalDays * 8;
+            var totalCapacityHours = workingDays.Count * 8;
 
             capacity.UpdateIpsFields(Enums.OperationType.Update);
-            capacity.CapacityHours = totalHours;
+            capacity.CapacityHours = totalCapacityHours;
             capacity.DateFrom = minDateFrom;
             capacity.DateTo = maxDateTo;
 
@@ -80,21 +79,33 @@ namespace RebuildProject.Service
             };
         }
 
+        private List<DateTime> CalculateWorkingDays(ICollection<ResourceAssignment> assignments)
+        {
+            var allDates = new List<DateTime>();
+
+            foreach (var a in assignments)
+            {
+                var totalDays = (a.DateTo.Value.Date - a.DateFrom.Value.Date).Days;
+                foreach (var offset in Enumerable.Range(0, totalDays + 1))
+                {
+                    allDates.Add(a.DateFrom.Value.Date.AddDays(offset));
+                }
+            }
+
+            return allDates;
+        }
+
         #endregion
 
         #region Private Methods
 
-        private static int WorkingDays(DateTime start, DateTime end)
+        private int WorkingDays(DateTime start, DateTime end)
         {
             int days = 0;
 
             for (var date = start.Date; date <= end.Date; date = date.AddDays(1))
             {
-                if (date.DayOfWeek != DayOfWeek.Saturday &&
-                    date.DayOfWeek != DayOfWeek.Sunday)
-                {
-                    days++;
-                }
+                days++;
             }
 
             return days;
