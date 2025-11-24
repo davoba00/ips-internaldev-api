@@ -42,6 +42,8 @@ namespace RebuildProject.Service
 
         #endregion
 
+        #region Public Methods
+
         public async Task<GetCapacityPreviewResult> GetCapacityPreview(GetCapacityPreviewQuery query, CancellationToken token)
         {
             var resourceId = query.Id;
@@ -61,15 +63,10 @@ namespace RebuildProject.Service
                 assignments = assignments.Where(x => x.DateFrom > dateFrom && x.DateTo < dateTo);
             }
 
-            int totalDays = 0;
-
-            foreach (var a in assignments)
-            {
-                totalDays += (a.DateTo.Value - a.DateFrom.Value).Days + 1;
-            }
-
             DateTime? minDateFrom = assignments.Select(x => x.DateFrom).DefaultIfEmpty().Min();
             DateTime? maxDateTo = assignments.Select(x => x.DateTo).DefaultIfEmpty().Max();
+
+            int totalDays = assignments.ToList().Sum(a => WorkingDays(a.DateFrom.Value, a.DateTo.Value));
 
             int totalHours = totalDays * 8;
 
@@ -88,5 +85,27 @@ namespace RebuildProject.Service
             };
 
         }
+
+        #endregion
+
+        #region Private Methods
+
+        private static int WorkingDays(DateTime start, DateTime end)
+        {
+            int days = 0;
+
+            for (var date = start.Date; date <= end.Date; date = date.AddDays(1))
+            {
+                if (date.DayOfWeek != DayOfWeek.Saturday &&
+                    date.DayOfWeek != DayOfWeek.Sunday)
+                {
+                    days++;
+                }
+            }
+
+            return days;
+        }
+
+        #endregion
     }
 }

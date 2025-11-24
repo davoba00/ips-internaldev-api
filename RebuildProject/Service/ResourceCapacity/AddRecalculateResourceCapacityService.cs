@@ -45,27 +45,24 @@ namespace RebuildProject.Service
         public async Task<AddRecalculateResourceCapacityResult> RecalculateResourceCapacityCapacity(AddRecalculateResourceCapacityCommand query, CancellationToken cancellationToken)
         {
             var id = query.ResourceCapacityId;
-            var capacity = db.ResourceCapacities.FirstOrDefault(a => a.ResourceCapacityId == id && a.Deleted == null);
 
-            if (capacity == null)
+            var capacity = await db.ResourceCapacities
+                            .Where(x => x.ResourceCapacityId == id && x.Deleted == null && x.Resource.Deleted == null)
+                            .Include(x => x.Resource)
+                            .ThenInclude(r => r.ResourceAssignments.Where(a => a.DateFrom != null && a.DateTo != null && a.Deleted == null))
+                            .FirstOrDefaultAsync(cancellationToken);
+
+            if (capacity == null || capacity?.Resource?.ResourceAssignments == null)
             {
-                return new AddRecalculateResourceCapacityResult
-                {
-
-                };
+                return new AddRecalculateResourceCapacityResult();
             }
 
-            var resource = db.ResourceAssignments.Where(x => x.ResourceId == capacity.ResourceId && x.Deleted == null && x.DateFrom != null && x.DateTo != null);
+            var assignments = capacity.Resource.ResourceAssignments;
 
-            DateTime? minDateFrom = resource.Select(x => x.DateFrom).DefaultIfEmpty().Min();
-            DateTime? maxDateTo = resource.Select(x => x.DateTo).DefaultIfEmpty().Max();
+            var minDateFrom = assignments.Min(x => x.DateFrom);
+            var maxDateTo = assignments.Max(x => x.DateTo);
 
-            int totalDays = 0;
-
-            foreach (var a in resource)
-            {
-                totalDays += (a.DateTo.Value - a.DateFrom.Value).Days + 1;
-            }
+            int totalDays = assignments.Sum(a => WorkingDays(a.DateFrom.Value, a.DateTo.Value));
 
             int totalHours = totalDays * 8;
 
@@ -80,6 +77,26 @@ namespace RebuildProject.Service
             {
                 ResourceCapacity = capacity
             };
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private static int WorkingDays(DateTime start, DateTime end)
+        {
+            int days = 0;
+
+            for (var date = start.Date; date <= end.Date; date = date.AddDays(1))
+            {
+                if (date.DayOfWeek != DayOfWeek.Saturday &&
+                    date.DayOfWeek != DayOfWeek.Sunday)
+                {
+                    days++;
+                }
+            }
+
+            return days;
         }
 
         #endregion
