@@ -2,8 +2,6 @@
 {
     public static class MiddlewareExtensions
     {
-        #region Public Methods
-
         public static IApplicationBuilder UseApiLogging(this IApplicationBuilder builder)
         {
             if (builder == null)
@@ -23,7 +21,5 @@
 
             return builder.UseMiddleware<RequestMiddleware>();
         }
-
-        #endregion
     }
 }
