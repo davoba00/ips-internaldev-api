@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Deltas;
 using Microsoft.AspNetCore.OData.Query;
+using Microsoft.AspNetCore.OData.Results;
 using RebuildProject.Models;
 using RebuildProject.Service;
 using static RebuildProject.Common.Constants;
@@ -42,7 +43,7 @@ namespace RebuildProject.Controllers
 
         [EnableQuery]
         [HttpGet("resourceAssignment/{id:guid}")]
-        public async Task<IActionResult> Get(Guid id, ODataQueryOptions<ResourceAssignment> queryOptions)
+        public async Task<SingleResult<ResourceAssignment>> Get(Guid id, ODataQueryOptions<ResourceAssignment> queryOptions)
         {
             var result = await mediator.Send(new GetResourceAssignmentQuery
             {
@@ -52,10 +53,12 @@ namespace RebuildProject.Controllers
 
             if (result.IsFailed)
             {
-                return this.StatusCode(result);
+                var empty = Enumerable.Empty<ResourceAssignment>().AsQueryable();
+
+                return SingleResult.Create(empty);
             }
 
-            return Ok(result.ResourceAssignment);
+            return SingleResult.Create(result.ResourceAssignment);
         }
 
         [HttpPost("resourceAssignment")]
