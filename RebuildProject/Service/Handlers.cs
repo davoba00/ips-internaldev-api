@@ -563,35 +563,35 @@ namespace RebuildProject.Service
     }
     #endregion
 
-    #region AddResourceAssignmentCommand
+    #region RecalculateResourceCapacityCommand
 
-    public partial class AddRecalculateResourceCapacityCommand : IRequest<AddRecalculateResourceCapacityResult>
+    public partial class RecalculateResourceCapacityCommand : IRequest<RecalculateResourceCapacityResult>
     {
     }
 
-    public partial class AddRecalculateResourceCapacityResult : Result
+    public partial class RecalculateResourceCapacityResult : Result
     {
         public bool IsValid { get; set; }
     }
-    public interface IAddRecalculateResourceCapacityService
+    public interface IRecalculateResourceCapacityService
     {
-        Task<AddRecalculateResourceCapacityResult> RecalculateResourceCapacityCapacity(AddRecalculateResourceCapacityCommand query, CancellationToken cancellationToken);
+        Task<RecalculateResourceCapacityResult> RecalculateResourceCapacityCapacity(RecalculateResourceCapacityCommand query, CancellationToken cancellationToken);
     }
 
 
-    public class AddRecalculateResourceCapacityHandler : IRequestHandler<AddRecalculateResourceCapacityCommand, AddRecalculateResourceCapacityResult>
+    public class AddRecalculateResourceCapacityHandler : IRequestHandler<RecalculateResourceCapacityCommand, RecalculateResourceCapacityResult>
     {
 
-        private readonly IAddRecalculateResourceCapacityService service;
+        private readonly IRecalculateResourceCapacityService service;
 
-        public AddRecalculateResourceCapacityHandler(IAddRecalculateResourceCapacityService service)
+        public AddRecalculateResourceCapacityHandler(IRecalculateResourceCapacityService service)
         {
             this.service = service;
         }
 
         #region Public Methods
 
-        public async Task<AddRecalculateResourceCapacityResult> Handle(AddRecalculateResourceCapacityCommand request, CancellationToken cancellationToken)
+        public async Task<RecalculateResourceCapacityResult> Handle(RecalculateResourceCapacityCommand request, CancellationToken cancellationToken)
         {
             var resource = await service.RecalculateResourceCapacityCapacity(request, cancellationToken);
             return resource;

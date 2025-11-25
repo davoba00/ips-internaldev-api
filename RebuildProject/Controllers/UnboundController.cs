@@ -85,7 +85,7 @@ namespace RebuildProject.Controllers
         [HttpPost("recalculateResourceCapacity")]
         public async Task<IActionResult> RecalculateResourceCapacity(Guid ResourceCapacityId)
         {
-            var result = await this.mediator.Send(new AddRecalculateResourceCapacityCommand
+            var result = await this.mediator.Send(new RecalculateResourceCapacityCommand
             {
                 ResourceCapacityId = ResourceCapacityId
             });

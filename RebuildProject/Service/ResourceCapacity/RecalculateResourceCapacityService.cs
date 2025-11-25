@@ -8,7 +8,7 @@ namespace RebuildProject.Service
 {
     #region Query
 
-    public partial class AddRecalculateResourceCapacityCommand
+    public partial class RecalculateResourceCapacityCommand
     {
         public Guid ResourceCapacityId { get; set; }
     }
@@ -17,14 +17,14 @@ namespace RebuildProject.Service
 
     #region Result
 
-    public partial class AddRecalculateResourceCapacityResult
+    public partial class RecalculateResourceCapacityResult
     {
         public ResourceCapacity ResourceCapacity { get; set; }
     }
 
     #endregion
 
-    public class AddRecalculateResourceCapacityService : IAddRecalculateResourceCapacityService
+    public class RecalculateResourceCapacityService : IRecalculateResourceCapacityService
     {
         #region Fields
 
@@ -34,7 +34,7 @@ namespace RebuildProject.Service
 
         #region Contructor
 
-        public AddRecalculateResourceCapacityService(AppDbContext db)
+        public RecalculateResourceCapacityService(AppDbContext db)
         {
             this.db = db;
         }
@@ -43,7 +43,7 @@ namespace RebuildProject.Service
 
         #region Public Methods
 
-        public async Task<AddRecalculateResourceCapacityResult> RecalculateResourceCapacityCapacity(AddRecalculateResourceCapacityCommand query, CancellationToken cancellationToken)
+        public async Task<RecalculateResourceCapacityResult> RecalculateResourceCapacityCapacity(RecalculateResourceCapacityCommand query, CancellationToken cancellationToken)
         {
             var id = query.ResourceCapacityId;
 
@@ -56,7 +56,7 @@ namespace RebuildProject.Service
 
             if (capacity == null || assignments == null)
             {
-                return new AddRecalculateResourceCapacityResult();
+                return new RecalculateResourceCapacityResult();
             }
 
             var minDateFrom = assignments.Min(x => x.DateFrom);
@@ -73,11 +73,15 @@ namespace RebuildProject.Service
 
             await db.SaveChangesAsync(cancellationToken);
 
-            return new AddRecalculateResourceCapacityResult
+            return new RecalculateResourceCapacityResult
             {
                 ResourceCapacity = capacity
             };
         }
+
+        #endregion
+
+        #region Private Methods
 
         private List<DateTime> CalculateWorkingDays(ICollection<ResourceAssignment> assignments)
         {
@@ -93,22 +97,6 @@ namespace RebuildProject.Service
             }
 
             return allDates;
-        }
-
-        #endregion
-
-        #region Private Methods
-
-        private int WorkingDays(DateTime start, DateTime end)
-        {
-            int days = 0;
-
-            for (var date = start.Date; date <= end.Date; date = date.AddDays(1))
-            {
-                days++;
-            }
-
-            return days;
         }
 
         #endregion

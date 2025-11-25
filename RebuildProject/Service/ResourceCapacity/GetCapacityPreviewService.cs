@@ -67,9 +67,9 @@ namespace RebuildProject.Service
             DateTime? minDateFrom = assignments.Select(x => x.DateFrom).DefaultIfEmpty().Min();
             DateTime? maxDateTo = assignments.Select(x => x.DateTo).DefaultIfEmpty().Max();
 
-            int totalDays = assignments.ToList().Sum(a => WorkingDays(a.DateFrom.Value, a.DateTo.Value));
+            var workingDays = this.CalculateWorkingDays(assignments.ToList());
 
-            int totalHours = totalDays * 8;
+            int totalHours = workingDays.Count * 8;
 
             var preview = new ResourceCapacity
             {
@@ -91,20 +91,20 @@ namespace RebuildProject.Service
 
         #region Private Methods
 
-        private static int WorkingDays(DateTime start, DateTime end)
+        private List<DateTime> CalculateWorkingDays(ICollection<ResourceAssignment> assignments)
         {
-            int days = 0;
+            var allDates = new List<DateTime>();
 
-            for (var date = start.Date; date <= end.Date; date = date.AddDays(1))
+            foreach (var a in assignments)
             {
-                if (date.DayOfWeek != DayOfWeek.Saturday &&
-                    date.DayOfWeek != DayOfWeek.Sunday)
+                var totalDays = (a.DateTo.Value.Date - a.DateFrom.Value.Date).Days;
+                foreach (var offset in Enumerable.Range(0, totalDays + 1))
                 {
-                    days++;
+                    allDates.Add(a.DateFrom.Value.Date.AddDays(offset));
                 }
             }
 
-            return days;
+            return allDates;
         }
 
         #endregion
