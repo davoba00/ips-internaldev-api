@@ -40,8 +40,9 @@ namespace RebuildProject.Middleware
             }
 
             context.Request.EnableBuffering();
-
+            
             string responseBody;
+
             Stream originalBody = context.Response.Body;
 
             using (var memoryStream = new MemoryStream())
