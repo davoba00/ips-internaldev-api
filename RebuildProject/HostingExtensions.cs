@@ -8,7 +8,6 @@ using RebuildProject.EF;
 using RebuildProject.MediatR;
 using RebuildProject.Middleware;
 using RebuildProject.Models;
-using RebuildProject.Service;
 using static RebuildProject.Common.Constants;
 
 namespace RebuildProject
@@ -83,6 +82,8 @@ namespace RebuildProject
                options =>
                {
                    options.AddRouteComponents(ApiRoutes.Default, ApiODataModelBuilder.GetEdmModel());
+                   options.AddRouteComponents(ApiRoutes.ApiMob, ApiODataModelBuilder.GetMobEdmModel());
+
                    options.EnableQueryFeatures(100);
                    options.EnableContinueOnErrorHeader = true;
                    options.RouteOptions.EnableNonParenthesisForEmptyParameterFunction = true;

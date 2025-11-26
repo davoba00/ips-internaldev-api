@@ -43,6 +43,19 @@ namespace ODataResourceApi.Services.OData
             return odataBuilder.GetEdmModel();
         }
 
+        public static IEdmModel GetMobEdmModel()
+        {
+            var odataBuilder = new ODataConventionModelBuilder();
+
+            odataBuilder.Function("GetResourcesData").ReturnsCollection<Resource>();
+
+            odataBuilder.Function("GetResourceData").Returns<Resource>();
+
+            odataBuilder.Function("GetResourceView").Returns<ResourceViewDto>();
+
+            return odataBuilder.GetEdmModel();
+        }
+
         #endregion
     }
 }

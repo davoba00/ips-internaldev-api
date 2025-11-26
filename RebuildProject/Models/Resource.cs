@@ -35,3 +35,11 @@ public partial class Resource
     public virtual ICollection<ResourceAssignment> ResourceAssignments { get; set; }
     public virtual ICollection<ResourceCapacity> ResourceCapacities { get; set; }
 }
+
+public partial class ResourceViewDto
+{
+    public Resource Resource { get; set; }
+    public long ResourceItemCount { get; set; }
+    public long ResourceAssignmentCount { get; set; }
+    public long ResourceCapacityCount { get; set; }
+}
